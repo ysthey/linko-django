@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="col-md-8">
+    <div class="page-title mt-5">
+        <h2>Search Results</h2>
+    </div>
+     <form method="get" action="{% url 'search' %}">
+        <input class="form-control rounded-0 mt-3" id="search" name="search" placeholder="Search by title or any any word you remember." width='100%' required>
+     </form>
+<div class="col-md-12">
+<div class="notes-list w-100 mt-4 p-2">
+<ul>
+{% for post in object_list %}
+    <li class="pb-2">
+      <div class="card">
+        <div class="card-body">
+        <a href="{% url 'note-detail' post.pk %}"><h5 class="card-title">{{ post.title }}</h2></a>
+        <h6 class="card-subtitle mb-2 text-muted">{{ post.created_date }} <a href="{% url 'category' post.category|slugify %}"><span class="badge rounded-pill bg-light text-dark">{{ post.category }}</span></a></h6>
+        <p class="card-text">{{ post.body|slice:":200" }}</p>
+        </div>
+        </div>               
+    </li>
+{% endfor %}
+</ul>
+    </div>
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

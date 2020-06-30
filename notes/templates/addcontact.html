@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-md-8">
+    <div class="page-title mt-5 mb-4">
+        <h2>💼 Add a Contact</h2>
+    </div>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="mb-4">
+    <ul>
+    <label for="exampleFormControlInput1" class="form-label">Name</label>
+    <li id="email" class="contact">{{ form.Name }}</li>
+    <label for="exampleFormControlInput1" class="form-label mt-4">Email</label>
+    <li id="email" class="contact">{{ form.Email }}</li>
+    <label for="exampleFormControlInput1" class="form-label mt-4">Contact</label>
+    <li id="email" class="contact">{{ form.Contact }}</li>
+    <label for="exampleFormControlInput1" class="form-label mt-4">Note</label>
+    <li id="email" class="contact">{{ form.Note }}</li>
+    </ul>
+    </div>
+    <input type="submit" class="btn btn-primary rounded-0 mb-3" value="Submit"></input>
+{% endblock %}

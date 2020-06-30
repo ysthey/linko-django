@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ cats }}</h1>
+
+<ul>
+{% for post in category_notes %}
+    <li><a href="{% url 'note-detail' post.pk %}">
+    {{  post.title }}</a> - <small><i>{{ post.category }}</i></small>
+    <br/> 
+    - <b>{{ post.author}}</b> - <small> {{ post.created_date }} </small> - <a href="{% url 'update-note' post.pk %}">
+    (Edit)</a><br/>
+    {{ post.body|slice:":200" }}</li>
+{% endfor %}
+</ul>
+
+
+
+
+{% endblock %}
