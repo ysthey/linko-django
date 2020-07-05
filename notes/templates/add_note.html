@@ -1,25 +1,21 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-<div class="col-md-8">
-    <div class="page-title mt-5 mb-4">
-        <h2>📝 Take a quick note!</h2>
-    </div>
-
+ <div class="row align-items-center mh-100">
+        <div class="col-sm-6 mx-auto mt-5">
+     <div class="text-muted pb-2"><h6>📝 Take a quick note!</h6></div>
 <form method="POST">
     {% csrf_token %}
-    <div class="mb-4">
+    <div class="pt-2 mb-4">
     <ul>
     <label for="exampleFormControlInput1" class="form-label">Title</label>
-    <li id="email" class="contact">{{ form.title }}</li>
-    <label for="exampleFormControlInput1" class="form-label">Author</label>
-    <li id="email" class="contact">{{ form.author }}</li>
+    <li class="contact">{{ form.title }}</li>
     <label for="exampleFormControlInput1" class="form-label mt-4">Category</label>
-    <li id="email" class="contact">{{ form.category }}</li>
+    <li class="contact">{{ form.category }}</li>
     <label for="exampleFormControlInput1" class="form-label mt-4">Body</label>
-    <li id="email" class="contact">{{ form.body }}</li>
+    <li class="contact">{{ form.body }}</li>
     </ul>
     </div>
-    <input type="submit" class="btn btn-primary rounded-0 mb-3" value="Submit"></input>
+    <input type="submit" class="btn btn-primary rounded-1  btn-block mb-3" value="Submit"></input>
 {% endblock %}
+</div>
+</div>

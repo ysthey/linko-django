@@ -5,21 +5,23 @@ from django.db.models import Q
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Post, Category, Bookmark, Contacts
-from .forms import PostForm, UpdateForm, LinkForm, ContactForm
+from .forms import PostForm, UpdateForm, LinkForm, ContactForm, CategoryForm
+from django.db.models.functions import Length, Upper, Lower
 
 # Create your views here.
 
 def HomePage(request):
     return render(request, "homepage.html")
 
-class HomeView(ListView):
+
+class HomeView(ListView):       
     model = Post
     template_name = 'home.html'
-    ordering = ['-created_date']
+    ordering = [Lower('category')]
     paginate_by = 10
 
     def get_context_data(self,*args, **kwargs):
-        cat_menu = Category.objects.all()
+        cat_menu = Category.objects.all()       
         context = super(HomeView, self).get_context_data(*args, **kwargs)
         context["cat_menu"] = cat_menu
         return context
@@ -27,13 +29,13 @@ class HomeView(ListView):
 class LinkView(ListView):
     model = Bookmark
     template_name = 'bookmarks.html'
-    ordering = ['-created_date']
+    ordering = [Lower('title')]
     paginate_by = 10
 
 class ContactsView(ListView):
     model = Contacts
     template_name = 'contacts.html'
-    ordering = ['-created_date']
+    ordering = [Lower('Name')]
     paginate_by = 10
 
 class NotesDetailView(DetailView):
@@ -64,8 +66,9 @@ class AddContactView(CreateView):
 
 class AddCategoryView(CreateView):
     model = Category
+    form_class = CategoryForm
     template_name = 'add_category.html'
-    fields = '__all__'
+    
 
 class UpdateNoteView(UpdateView):
     model = Post
@@ -74,13 +77,26 @@ class UpdateNoteView(UpdateView):
     #fields = ['title', 'body']
 
 def CategoryView(request, cats):
-    category_notes = Post.objects.filter(category=cats.replace(" ", "-"))
+    category_notes = Post.objects.filter(category=cats.replace('-', ' '))
 
-    return render(request, 'categories.html', {'cats':cats.title().replace("-", " "), 'category_notes':category_notes})
+    return render(request, 'categories.html', {'cats':cats.title().replace('-', ' '), 'category_notes':category_notes})
 
 
 def search(request):
     search = request.GET['search']
-    object_list = Post.objects.filter(title__icontains=search)
+    object_list = Post.objects.filter(Q(title__icontains=search) | Q(category__icontains=search))
     params = {'object_list': object_list}
     return render(request, 'search.html', params)
+
+def searchlinks(request):
+    search = request.GET['search']
+    object_list = Bookmark.objects.filter(Q(url__icontains=search) | Q(title__icontains=search))
+    params = {'object_list': object_list}
+    return render(request, 'searchbkms.html', params)
+
+def searchcontacts(request):
+    search = request.GET['search']
+    object_list = Contacts.objects.filter(Q(Email__icontains=search) | Q(Name__icontains=search))
+    params = {'object_list': object_list}
+    return render(request, 'searchcts.html', params)
+

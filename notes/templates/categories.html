@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-<h1>{{ cats }}</h1>
-
-<ul>
+ <div class="row align-items-center mh-100">
+        <div class="col-sm-6 mx-auto mt-5">
+     <div class="text-muted pb-2"><h6>{{ cats }}</h6></div>
 {% for post in category_notes %}
-    <li><a href="{% url 'note-detail' post.pk %}">
-    {{  post.title }}</a> - <small><i>{{ post.category }}</i></small>
-    <br/> 
-    - <b>{{ post.author}}</b> - <small> {{ post.created_date }} </small> - <a href="{% url 'update-note' post.pk %}">
-    (Edit)</a><br/>
-    {{ post.body|slice:":200" }}</li>
+    <div class="card link-card shadow-sm mb-2 bg-white">
+  <div class="card-body d-flex align-items-center ml-2 ">
+        <div class="flex-wrap ml-3">
+     <a href="{% url 'note-detail' post.pk %}"><h6 class="link-head mb-0">{{ post.title }}</h6></a>
+    <p class="card-text text-muted link-text mb-0">{{ post.created_date }}<a href="{% url 'category' post.category %}"><span class="badge rounded-pill bg-light text-dark">{{ post.category }}</span></a></p>
+   <p class="card-text text-muted link-text ">{{ post.body|slice:":200" }}</p>
+    </div>
+  </div>
+</div>
 {% endfor %}
-</ul>
+</div>
+</div>
 
 
 

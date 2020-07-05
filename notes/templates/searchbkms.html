@@ -7,7 +7,6 @@
      </form>
      <div class="text-muted pb-2"><h6>Your Bookmarks</h6></div>
         {% for bookmark in object_list %}
-        <a href="{{ bookmark.url }}">
      <div class="card link-card shadow-sm mb-2 bg-white">
   <div class="card-body d-flex align-items-center ml-2 ">
     <img width="24" height="24" src="https://www.google.com/s2/favicons?sz=64&domain_url={{ bookmark.url }}" />
@@ -16,11 +15,8 @@
     <p class="card-text text-muted link-text">{{ bookmark.url }}</p>
     </div>
   </div>
-  </a>
 </div>
- {% empty %}
-<div class="text-muted pb-2"><h6>No results founds.</h6></div>
-{% endfor %}
+  {% endfor %}
 </div>
   </div>
 

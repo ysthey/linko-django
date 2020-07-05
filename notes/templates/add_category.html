@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-<h1>Add a Category</h1>
+ <div class="row align-items-center mh-100">
+        <div class="col-sm-6 mx-auto mt-5">
+     <div class="text-muted pb-2"><h6>Add Category</h6></div>
 
 <form method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button>Add</button>
+    <div class="pt-2 mb-4">
+    <ul>
+    <label for="exampleFormControlInput1" class="form-label">Title</label>
+    <li class="contact">{{ form.name }}</li>
+    </ul>
+    </div>
+<input type="submit" class="btn btn-primary rounded-1  btn-block mb-3" value="Submit"></input>
 {% endblock %}
+</div>
+</div>

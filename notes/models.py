@@ -17,13 +17,12 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     created_date = models.DateField(auto_now_add=True)
     category = models.CharField(max_length=255, default='tax-returns')
 
     def __str__(self):
-        return self.title + ' | ' + str(self.author)
+        return self.title + ' | ' + str(self.category)
 
     def get_absolute_url(self):
         return reverse('home')

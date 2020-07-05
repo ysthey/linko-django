@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import search, HomePage, HomeView, NotesDetailView, AddNoteView, UpdateNoteView, AddCategoryView, CategoryView, LinkView, AddLinkView, AddContactView,ContactsView
+from .views import searchlinks, searchcontacts, search, HomePage, HomeView, NotesDetailView, AddNoteView, UpdateNoteView, AddCategoryView, CategoryView, LinkView, AddLinkView, AddContactView,ContactsView
 
 urlpatterns = [  
     path('', HomePage, name='homepage'),
@@ -20,5 +20,7 @@ urlpatterns = [
     path('addcontact/', AddContactView.as_view(), name='add_contact'),
 
     path('search/', search , name='search'),
+    path('searchbkms/', searchlinks , name='searchbkms'),
+    path('searchcts/', searchcontacts , name='searchcts'),
 
 ]
