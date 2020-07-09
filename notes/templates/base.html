@@ -79,6 +79,11 @@
     		margin-top: 16px;
     	}
     }
+    @media (min-width: 320px) and (max-width: 480px) {
+     .my-float{
+        margin-top:25px;
+    }  
+  }
     ul {
     list-style: none;
     padding-left: 0;
@@ -121,7 +126,22 @@
     	min-width: fit-content;
     	word-break: break-all;
     }
+    .float{
+  	position:fixed;
+    z-index: 100;
+	  width:60px;
+	  height:60px;
+  	bottom:40px;
+	  right:40px;
+	  background-color:#0d2481;
+  	color:#FFF;
+	  border-radius:50px;
+	  text-align:center;
   
+}
+  .my-float{
+	 padding-top: 1px;
+  }
 
     </style>
   </head>

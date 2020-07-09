@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<a href="{% url 'add_note' %}" class="float">
+  <h2 class="my-float mt-3"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+width="24" height="24"
+viewBox="0 0 171 171"
+style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,171.99637v-171.99637h171.99637v171.99637z" fill="none"></path><g fill="#ffffff"><path d="M85.33301,16.94414c-6.29166,0.0922 -11.31907,5.26412 -11.23301,11.55586v45.6h-45.6c-4.11125,-0.05814 -7.93533,2.10188 -10.00792,5.65295c-2.07259,3.55107 -2.07259,7.94303 0,11.4941c2.07259,3.55107 5.89667,5.71109 10.00792,5.65295h45.6v45.6c-0.05814,4.11125 2.10188,7.93533 5.65295,10.00792c3.55107,2.07259 7.94303,2.07259 11.4941,0c3.55107,-2.07259 5.71109,-5.89667 5.65295,-10.00792v-45.6h45.6c4.11125,0.05814 7.93533,-2.10188 10.00792,-5.65295c2.07259,-3.55107 2.07259,-7.94303 0,-11.4941c-2.07259,-3.55107 -5.89667,-5.71109 -10.00792,-5.65295h-45.6v-45.6c0.04212,-3.07946 -1.16337,-6.04498 -3.34213,-8.22165c-2.17876,-2.17666 -5.14544,-3.3793 -8.22486,-3.33421z"></path></g></g></svg></h2></a>
+
 <div class="row align-items-center mh-100">
         <div class="col-sm-6 mx-auto mt-5">
       <form method="get" action="{% url 'search' %}">
