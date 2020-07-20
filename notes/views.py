@@ -4,9 +4,10 @@ import django.utils.text
 from django.db.models import Q
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from .models import Post, Category, Bookmark, Contacts
-from .forms import PostForm, UpdateForm, LinkForm, ContactForm, CategoryForm
+from .models import Post, Category, Bookmark, Contacts, Map
+from .forms import PostForm, UpdateForm, LinkForm, ContactForm, CategoryForm, UploadForm
 from django.db.models.functions import Length, Upper, Lower
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -14,7 +15,11 @@ def HomePage(request):
     return render(request, "homepage.html")
 
 
-class HomeView(ListView):       
+def FilesPage(request):
+    return render(request, "files.html")
+
+
+class HomeView(ListView):    
     model = Post
     template_name = 'home.html'
     ordering = [Lower('category')]
@@ -100,3 +105,14 @@ def searchcontacts(request):
     params = {'object_list': object_list}
     return render(request, 'searchcts.html', params)
 
+def model_form_upload(request):
+    if request.method == 'POST':
+        form = UploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('uploads')
+    else:
+        form = UploadForm()
+    return render(request, 'form_upload.html', {
+        'form': form
+    })

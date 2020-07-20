@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+ <div class="row align-items-center mh-100">
+        <div class="col-sm-6 mx-auto mt-5">
+      {% if user.is_authenticated %}
+     <div class="text-muted pb-2"><h6>Upload a File</h6></div>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-4">
+    <ul>
+    <label for="exampleFormControlInput1" class="form-label">Name</label>
+    <li id="email" class="contact">{{ form.name }}</li><br/>
+    <label for="exampleFormControlInput1" class="form-label">File</label>
+    <li id="email" class="contact">{{ form.file }}</li>
+    </ul>
+    </div>
+    <button class="btn btn-primary rounded-1  btn-block mb-3" type="submit">Upload</button>
+  </form>
+
+<script>
+var options = {
+      // Shared link to Dropbox file
+      link: "https://www.dropbox.com/sh/k66d48eqqt39lqf/AABR5K-_25cImSD98qJozxIDa?dl=0",
+      file: {
+        // Sets the zoom mode for embedded files. Defaults to 'best'.
+        zoom: "best" // or "fit"
+      },
+      folder: {
+        // Sets the view mode for embedded folders. Defaults to 'list'.
+        view: "list" // or "grid"
+        headerSize: "normal" // or "small"
+      }
+    }
+    Dropbox.embed(options, element);
+</script>
+{% else %}
+<div class="text-muted pb-2"><h6>You aren't logged in!<a href="{% url 'login' %}" style="color:blue;"> Click here to Login</a></h6></div>
+{% endif %}
+{% endblock %}
+</div>
+</div>

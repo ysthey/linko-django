@@ -1,14 +1,6 @@
 from django import forms
-from .models import Post, Category, Bookmark, Contacts
-
-
-
-def retList():
-    choices = Category.objects.all().values_list('name','name')
-    choice_list = []
-    for item in choices:
-        choice_list.append(item)
-    return choice_list
+from django.contrib.auth.forms import AuthenticationForm
+from .models import Post, Category, Bookmark, Contacts, Map
 
 class CategoryForm(forms.ModelForm):
 
@@ -64,7 +56,29 @@ class UpdateForm(forms.ModelForm):
         widgets = {
 
         'title': forms.TextInput(attrs={'class': 'form-control '}),
-        'category': forms.Select(choices=retList(), attrs={'class': 'form-control'}),      
+        'category': forms.Select(attrs={'class': 'form-control'}),      
         'body': forms.Textarea(attrs={'class': 'form-control'}),
         
         }
+
+class UploadForm(forms.ModelForm):
+    class Meta:
+        model = Map
+        fields = ('name', 'file')
+        widgets = {
+
+        'name': forms.TextInput(attrs={'class': 'form-control'}),
+        'file': forms.FileInput(), 
+    
+    }
+
+class UserLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(UserLoginForm, self).__init__(*args, **kwargs)
+    widgets = {
+
+        'username': forms.TextInput(attrs={'class': 'form-control'}),
+        'password': forms.PasswordInput(attrs={'class': 'form-control',}), 
+    
+    }
+    

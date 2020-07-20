@@ -2,6 +2,7 @@
 {% block content %}
  <div class="row align-items-center mh-100">
         <div class="col-sm-6 mx-auto mt-5">
+      {% if user.is_authenticated %}
 <h3>{{ post.title }}</h3>
 <small> By: {{ post.author }} - {{ post.created_date}} </small> <br/>
 <hr>
@@ -13,7 +14,9 @@
     </div>
     </div>
     </div>
-
+{% else %}
+<div class="text-muted pb-2"><h6>You aren't logged in!<a href="{% url 'login' %}" style="color:blue;"> Click here to Login</a></h6></div>
+{% endif %}
 {% endblock %}
 </div>
 </div>

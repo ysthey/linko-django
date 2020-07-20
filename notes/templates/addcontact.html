@@ -2,6 +2,7 @@
 {% block content %}
  <div class="row align-items-center mh-100">
         <div class="col-sm-6 mx-auto mt-5">
+    {% if user.is_authenticated %}
      <div class="text-muted pb-2"><h6>💼 Add a Contact</h6></div>
 
 <form method="POST">
@@ -19,6 +20,9 @@
     </ul>
     </div>
     <input type="submit" class="btn btn-primary rounded-1 btn-block mb-3" value="Submit"></input>
+{% else %}
+<div class="text-muted pb-2"><h6>You aren't logged in!<a href="{% url 'login' %}" style="color:blue;"> Click here to Login</a></h6></div>
+{% endif %}
 {% endblock %}
 </div>
 </div>

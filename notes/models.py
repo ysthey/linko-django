@@ -52,4 +52,9 @@ class Contacts(models.Model):
     def get_absolute_url(self):
         return reverse('home')
 
-    
+class Map(models.Model):
+    name = models.CharField(max_length=200)
+    file = models.FileField(upload_to='media')
+
+    def __str__(self):
+        return self.name

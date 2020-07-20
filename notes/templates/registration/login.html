@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+ <div class="row align-items-center mh-100">
+        <div class="col-sm-6 mx-auto mt-5">
+     <div class="text-muted pb-2"><h6>Login</h6></div>
+
+  {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+  
+  {% if next %}
+    {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+    {% else %}
+      <p>Please login to see this page.</p>
+    {% endif %}
+  {% endif %}
+  
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="pt-2 mb-4">
+    <ul>
+      <label for="exampleFormControlInput1" class="form-label mt-4">{{ form.username.label_tag }}</label>
+      <li class="contact">{{ form.username }}</li>
+      <label for="exampleFormControlInput1" class="form-label mt-4">{{ form.password.label_tag }}</label>
+      <li class="contact">{{ form.password }}</li><br/>
+    </ul>
+    </div>
+    <div class="row">
+    <div class="col-6">
+    <input class="btn btn-primary rounded-1  btn-block mb-3" type="submit" value="login" />
+    <input type="hidden" name="next" value="{{ next }}" />
+    </div>
+    </div>
+  </form>
+
+{% endblock %}
+</div>
+</div>
