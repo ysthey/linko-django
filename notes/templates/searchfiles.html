@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row align-items-center mh-100">
+        <div class="col-sm-6 mx-auto mt-5">
+    {% if user.is_authenticated %}
+      <form method="get" action="{% url 'searchfiles' %}">
+        <input class="form-control search-box shadow-sm p-3 mb-5 bg-white mt-3" id="search" name="search" placeholder="Search your files..">
+     </form>
+     <div class="text-muted pb-2"><h6>Search Results</h6></div>
+{% for post in object_list %}
+    <div class="card link-card shadow-sm mb-2 bg-white">
+  <div class="card-body d-flex align-items-center ml-2 ">
+        <div class="flex-wrap ml-3">
+     <a href="{% url 'download' post.pk %}"><h6 class="link-head mb-0">{{ post.name}}</h6></a>
+    <p class="card-text muted mb-0">{{ post.description }}</p>
+   <p class="card-text text-muted link-text ">{{ post.file }}</p>
+<span class="badge rounded-pill bg-light text-dark">{{ post.category }}</span>
+    </div>
+  </div>
+</div>
+{% empty %}
+<div class="text-muted pb-2"><h6>No results founds.</h6></div>
+{% endfor %}
+    </div>
+</div>
+<div class="pagination">
+     <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% else %}
+<div class="text-muted pb-2"><h6>You aren't logged in!<a href="{% url 'login' %}" style="color:blue;"> Click here to Login</a></h6></div>
+{% endif %}
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import FilesPage, searchlinks, searchcontacts, search, HomePage, HomeView, NotesDetailView, AddNoteView, UpdateNoteView, AddCategoryView, CategoryView, LinkView, AddLinkView, AddContactView,ContactsView, model_form_upload
+from .views import download_file, searchfiles, FilesView, searchlinks, searchcontacts, search, HomePage, HomeView, NotesDetailView, AddNoteView, UpdateNoteView, AddCategoryView, CategoryView, LinkView, AddLinkView, AddContactView,ContactsView, model_form_upload
 from notes.forms import UserLoginForm
 from django.contrib.auth import views
 
@@ -24,10 +24,13 @@ urlpatterns = [
     path('search/', search , name='search'),
     path('searchbkms/', searchlinks , name='searchbkms'),
     path('searchcts/', searchcontacts , name='searchcts'),
+    path('searchfiles/', searchfiles, name='searchfiles'),
 
-    path('files/', FilesPage , name='filepage'),
+    #files
+    path('files/', FilesView.as_view(), name='files'),
     path('upload/', model_form_upload , name='uploads'),
+    path('download/<int:pk>', download_file, name='download'),
 
-     path('login/', views.LoginView.as_view(template_name="login.html",authentication_form=UserLoginForm), name='login')
+    path('login/', views.LoginView.as_view(template_name="login.html",authentication_form=UserLoginForm), name='login')
 
 ]

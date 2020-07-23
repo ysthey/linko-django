@@ -54,7 +54,9 @@ class Contacts(models.Model):
 
 class Map(models.Model):
     name = models.CharField(max_length=200)
+    description= models.CharField(max_length=10240, default='')
     file = models.FileField(upload_to='media')
+    category = models.CharField(max_length=255, default='')
 
     def __str__(self):
         return self.name

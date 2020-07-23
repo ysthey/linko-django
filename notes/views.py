@@ -8,6 +8,10 @@ from .models import Post, Category, Bookmark, Contacts, Map
 from .forms import PostForm, UpdateForm, LinkForm, ContactForm, CategoryForm, UploadForm
 from django.db.models.functions import Length, Upper, Lower
 from django.shortcuts import redirect
+from django.http import HttpResponse
+import os
+
+import mimetypes
 
 # Create your views here.
 
@@ -15,8 +19,6 @@ def HomePage(request):
     return render(request, "homepage.html")
 
 
-def FilesPage(request):
-    return render(request, "files.html")
 
 
 class HomeView(ListView):    
@@ -30,6 +32,14 @@ class HomeView(ListView):
         context = super(HomeView, self).get_context_data(*args, **kwargs)
         context["cat_menu"] = cat_menu
         return context
+
+class FilesView(ListView):    
+    model = Map
+    template_name = 'files.html'
+    ordering = [Lower('name')]
+    paginate_by = 10
+
+
 
 class LinkView(ListView):
     model = Bookmark
@@ -105,6 +115,13 @@ def searchcontacts(request):
     params = {'object_list': object_list}
     return render(request, 'searchcts.html', params)
 
+def searchfiles(request):
+    search = request.GET['search']
+    object_list = Map.objects.filter(Q(name__icontains=search))
+    params = {'object_list': object_list}
+    return render(request, 'searchfiles.html', params)
+
+
 def model_form_upload(request):
     if request.method == 'POST':
         form = UploadForm(request.POST, request.FILES)
@@ -116,3 +133,15 @@ def model_form_upload(request):
     return render(request, 'form_upload.html', {
         'form': form
     })
+
+def download_file(request, pk=0):
+    # fill these variables with real values
+    myfile = Map.objects.get(pk=int(pk))
+    fl_path = myfile.file.url
+    filename = os.path.basename(fl_path)
+
+    fl = open(fl_path, 'rb')
+    mime_type, _ = mimetypes.guess_type(fl_path)
+    response = HttpResponse(fl, content_type=mime_type)
+    response['Content-Disposition'] = "attachment; filename=%s" % filename
+    return response

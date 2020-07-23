@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'notes',
-    'storages',
 
 ]
 
@@ -127,6 +126,6 @@ LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/'
 
-DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-DROPBOX_OAUTH2_TOKEN = '6xxhSQ-OPcAAAAAAAAAADHfT7pCK0Ju80feXxataqzB73TX8hkGAOvp905o0ZSrj'
-DROPBOX_ROOT_PATH = 'media'
+#DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+#DROPBOX_OAUTH2_TOKEN = '6xxhSQ-OPcAAAAAAAAAADHfT7pCK0Ju80feXxataqzB73TX8hkGAOvp905o0ZSrj'
+#DROPBOX_ROOT_PATH = 'media'

@@ -62,12 +62,19 @@ class UpdateForm(forms.ModelForm):
         }
 
 class UploadForm(forms.ModelForm):
+
+    category = forms.ModelChoiceField(queryset=None, widget=forms.Select(attrs={'class': 'form-control rounded-1'}))
+    def __init__(self, *args, **kwargs):
+        super(UploadForm, self).__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.all()
     class Meta:
         model = Map
-        fields = ('name', 'file')
+        fields = ('name', 'description', 'category', 'file')
         widgets = {
 
         'name': forms.TextInput(attrs={'class': 'form-control'}),
+        'description': forms.TextInput(attrs={'class': 'form-control'}),
+        'category': forms.Select(attrs={'class': 'form-control'}),      
         'file': forms.FileInput(), 
     
     }
