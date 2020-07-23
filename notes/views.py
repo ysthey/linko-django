@@ -117,7 +117,7 @@ def searchcontacts(request):
 
 def searchfiles(request):
     search = request.GET['search']
-    object_list = Map.objects.filter(Q(name__icontains=search))
+    object_list = Map.objects.filter(Q(name__icontains=search) | Q(category__icontains=search)  | Q(description__icontains=search))
     params = {'object_list': object_list}
     return render(request, 'searchfiles.html', params)
 
