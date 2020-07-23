@@ -93,8 +93,12 @@ class UpdateNoteView(UpdateView):
 
 def CategoryView(request, cats):
     category_notes = Post.objects.filter(category=cats.replace('-', ' '))
-
     return render(request, 'categories.html', {'cats':cats.title().replace('-', ' '), 'category_notes':category_notes})
+
+def CategoryFilesView(request, cats):
+    category_files = Map.objects.filter(category=cats.replace('-', ' '))
+    return render(request, 'categoriesfiles.html', {'cats':cats.title().replace('-', ' '), 'category_files':category_files})
+
 
 
 def search(request):

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import download_file, searchfiles, FilesView, searchlinks, searchcontacts, search, HomePage, HomeView, NotesDetailView, AddNoteView, UpdateNoteView, AddCategoryView, CategoryView, LinkView, AddLinkView, AddContactView,ContactsView, model_form_upload
+from .views import CategoryFilesView, download_file, searchfiles, FilesView, searchlinks, searchcontacts, search, HomePage, HomeView, NotesDetailView, AddNoteView, UpdateNoteView, AddCategoryView, CategoryView, LinkView, AddLinkView, AddContactView,ContactsView, model_form_upload
 from notes.forms import UserLoginForm
 from django.contrib.auth import views
 
@@ -11,6 +11,7 @@ urlpatterns = [
     path('addcateogry/', AddCategoryView.as_view(), name='add_category'),
     path('notes/edit/<int:pk>', UpdateNoteView.as_view(), name='update-note'),
     path('category/<str:cats>/', CategoryView, name='category'),
+    path('categoryfiles/<str:cats>/', CategoryFilesView, name='categoryfiles'),
 
     #bookmarks
 
