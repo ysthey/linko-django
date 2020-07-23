@@ -10,7 +10,7 @@
         <div class="flex-wrap ml-3">
           <a href="{% url 'download' post.pk %}"><h6 class="link-head mb-0">{{ post.name}}</h6></a>
           <p class="card-text muted mb-0">{{ post.description }}</p>
-         <a href="{% url 'categoryfiles' post.category|slugify %}"><p class="card-text text-muted link-text ">{{ post.file }}</p></a>
+         <p class="card-text text-muted link-text ">{{ post.file }}</p>
     </div>
   </div>
 </div>
