@@ -25,7 +25,7 @@ SECRET_KEY = 'iu3=+zraahvvllwwp%^+$=*2x)f5*1yk%zm2@pfhnzuvt%v%v8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'notes',
+    'rest_framework'
 
 ]
 

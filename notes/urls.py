@@ -1,7 +1,13 @@
 from django.urls import path
-from .views import CategoryFilesView, download_file, searchfiles, FilesView, searchlinks, searchcontacts, search, HomePage, HomeView, NotesDetailView, AddNoteView, UpdateNoteView, AddCategoryView, CategoryView, LinkView, AddLinkView, AddContactView,ContactsView, model_form_upload
+from django.conf.urls  import url, include
+from .views import CategoryViewSet, CategoryFilesView, download_file, searchfiles, FilesView, searchlinks, searchcontacts, search, HomePage, HomeView, NotesDetailView, AddNoteView, UpdateNoteView, AddCategoryView, CategoryView, LinkView, AddLinkView, AddContactView,ContactsView, model_form_upload
 from notes.forms import UserLoginForm
 from django.contrib.auth import views
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+
+router.register(r'categoryapi', CategoryViewSet)
 
 urlpatterns = [  
     path('', HomePage, name='homepage'),
@@ -12,6 +18,7 @@ urlpatterns = [
     path('notes/edit/<int:pk>', UpdateNoteView.as_view(), name='update-note'),
     path('category/<str:cats>/', CategoryView, name='category'),
     path('categoryfiles/<str:cats>/', CategoryFilesView, name='categoryfiles'),
+    url(r'^', include(router.urls), name="categoryapi"),
 
     #bookmarks
 

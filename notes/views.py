@@ -1,11 +1,13 @@
 from django.shortcuts import render
 import string
 import django.utils.text
+from rest_framework import viewsets
 from django.db.models import Q
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Post, Category, Bookmark, Contacts, Map
 from .forms import PostForm, UpdateForm, LinkForm, ContactForm, CategoryForm, UploadForm
+from .serializers import CategorySerializer
 from django.db.models.functions import Length, Upper, Lower
 from django.shortcuts import redirect
 from django.http import HttpResponse
@@ -98,6 +100,14 @@ def CategoryView(request, cats):
 def CategoryFilesView(request, cats):
     category_files = Map.objects.filter(category=cats.replace('-', ' '))
     return render(request, 'categoriesfiles.html', {'cats':cats.title().replace('-', ' '), 'category_files':category_files})
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows categories to be viewed or edited.
+    """
+    queryset = Category.objects.all().order_by('name')
+    serializer_class = CategorySerializer
+
 
 
 

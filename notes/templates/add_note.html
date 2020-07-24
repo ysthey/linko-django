@@ -11,12 +11,67 @@
     <label for="exampleFormControlInput1" class="form-label">Title</label>
     <li class="contact">{{ form.title }}</li>
     <label for="exampleFormControlInput1" class="form-label mt-4">Category</label>
+    <div id="addcategory" class="btn btn-secondary rounded-1 btn-sm" >+</div>
     <li class="contact">{{ form.category }}</li>
     <label for="exampleFormControlInput1" class="form-label mt-4">Body</label>
     <li class="contact">{{ form.body }}</li>
     </ul>
     </div>
     <input type="submit" class="btn btn-primary rounded-1  btn-block mb-3" value="Submit"></input>
+</form>
+<div id="dialog-form" title="New Category">
+  <form>
+    <fieldset>
+      <label for="name">Name</label>
+      <input type="text" name="name" id="name" value="" class="text ui-widget-content ui-corner-all">
+    </fieldset>
+  </form>
+</div>
+
+<script>
+  window.onload = function(){
+      let dialog = $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 200,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Create": ()=>{
+          let newcat = $( "#dialog-form #name" ).val();
+          if (newcat && newcat.trim().length > 0){
+            $.ajax({
+              url: '/categoryapi/',
+              type: 'post',
+              data: {
+                  name: newcat
+              },
+              headers: {'X-CSRFToken': '{{ csrf_token }}'},
+              dataType: 'json',
+              success: function (data) {
+                  dialog.dialog( "close" );
+                  window.location.reload();
+              },
+              error: function(jq,ts){
+                  dialog.dialog( "close" );
+              }
+            });
+          }
+          },
+        Cancel: function() {
+          dialog.dialog( "close" );
+        }
+      },
+      close: function() {
+        //allFields.removeClass( "ui-state-error" );
+      }
+      });
+
+      $( "#addcategory" ).click(function() {
+          dialog.dialog( "open" );
+      });
+
+  };
+</script>
 {% else %}
 <div class="text-muted pb-2"><h6>You aren't logged in!<a href="{% url 'login' %}" style="color:blue;"> Click here to Login</a></h6></div>
 {% endif %}
