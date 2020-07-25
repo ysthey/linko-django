@@ -22,8 +22,6 @@ def HomePage(request):
     return render(request, "homepage.html")
 
 
-
-
 class HomeView(ListView):    
     model = Post
     template_name = 'home.html'

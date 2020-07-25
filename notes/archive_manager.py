@@ -4,6 +4,36 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from django.template.loader import render_to_string
 import threading
+import glob
+homepage_links = {
+    'home':'./index.html',
+    'notes':'./html/notes.html',
+    'bookmarks':'./html/bookmarks.html',
+    'contacts':'./html/contacts.html',
+    'files':'./html/files.html',
+    'scripts':'./scripts',
+    'images':'./images',
+    }
+subpage_links = {
+    'home':'../index.html',
+    'notes':'./notes.html',
+    'bookmarks':'./bookmarks.html',
+    'contacts':'./contacts.html',
+    'files':'./files.html',
+    'scripts':'../scripts',
+    'images':'../images',
+    }
+subsubpage_links = {
+    'home':'../../index.html',
+    'notes':'../notes.html',
+    'bookmarks':'../bookmarks.html',
+    'contacts':'../contacts.html',
+    'files':'../files.html',
+    'scripts':'../../scripts',
+    'images':'../../images',
+    }
+
+
 
 
 class IsRunningMap:
@@ -49,6 +79,16 @@ class ArchivedFile:
         self.description = description
         self.category = category
 
+class ArchivedNote:
+    def __init__(self, title, category, body, created_date, path):
+        self.title= title
+        self.body= body
+        self.created_date = created_date
+        self.category = category
+        self.path = path
+
+
+
 class ArchiveManager:
     __instance = None
     __executor = ThreadPoolExecutor(max_workers=mp.cpu_count())
@@ -56,7 +96,9 @@ class ArchiveManager:
     ARCH_TEMP = os.path.join(ARCH_ROOT, 'temp')
     FNAME_TMPL = "archive_{}.zip"
     FILES_HTML = "html/files.html"
+    CATS_FILES_HTML = "html/files_{}.html"
     NOTES_HTML = "html/notes.html"
+    NOTE_HTML = "html/notes/note_{}.html"
     BOOKMARKS_HTML = "html/bookmarks.html"
     CONTACTS_HTML = "html/contacts.html"
     HOME_HTML = "index.html"
@@ -107,34 +149,45 @@ class ArchiveManager:
         output_zip = os.path.join(out_dir, self.FNAME_TMPL.format(cat))
         archdir='archive_{}'.format(cat)
         arch_files = []
-        print(output_zip)
-        homepage_links = {
-            'home':'./index.html',
-            'notes':'./html/notes.html',
-            'bookmarks':'./html/bookmarks.html',
-            'contacts':'./html/contacts.html',
-            'files':'./html/files.html',
-        }
-        subpage_links = {
-            'home':'../index.html',
-            'notes':'./notes.html',
-            'bookmarks':'./bookmarks.html',
-            'contacts':'./contacts.html',
-            'files':'./files.html',
-        }
+        arch_notes = []
+        arch_cats_files = {}
+        static_files = [(x, os.path.join(archdir,x.replace('./offline_statics/',''))) for x in glob.iglob("./offline_statics/**/*.*",recursive=True) if os.path.isfile(x) ]
+        print(static_files)
+
         with zipfile.ZipFile(output_zip, "w") as z:
+            for src,dst in static_files:
+                z.write(src,dst)
+
             # files
             for fr in file_records:
                 fn = os.path.basename(fr.file.url)
                 cat_path = os.path.join(fr.category,fn)
                 arch_path = os.path.join(archdir,cat_path)
                 z.write(fr.file.url,arch_path)
-                arch_files.append(ArchivedFile(fr.name,fr.category,fr.description,os.path.join('../',cat_path)))
-            files_html_str = render_to_string('offline/files.html', {'files':arch_files, 'links':subpage_links})
+                arch_file = ArchivedFile(fr.name,fr.category,fr.description,os.path.join('../',cat_path))
+                if fr.category in arch_cats_files:
+                    arch_cats_files[fr.category].append(arch_file)
+                else:
+                    arch_cats_files[fr.category] = [arch_file]
+                arch_files.append(arch_file)
+
+            #files by cats
+            for k, v in arch_cats_files.items():
+                files_html_str = render_to_string('offline/files.html', {'page_title':k , 'files':v, 'links':subpage_links})
+                z.writestr(os.path.join(archdir,self.CATS_FILES_HTML.format(k)), files_html_str)
+                
+
+            #allfiles
+            files_html_str = render_to_string('offline/files.html', {'page_title':'Your Files', 'files':arch_files, 'links':subpage_links})
             z.writestr(os.path.join(archdir,self.FILES_HTML), files_html_str)
 
             #notes
-            notes_html_str = render_to_string('offline/notes.html', {'notes':notes,'links':subpage_links })
+            for note in notes:
+                note_html_str = render_to_string('offline/note.html', {'note':note,'links':subsubpage_links })
+                arch_notes.append(ArchivedNote(note.title,note.category,note.body, note.created_date, os.path.join('notes','note_{}.html'.format(note.id))))
+                z.writestr(os.path.join(archdir,self.NOTE_HTML.format(note.id)), note_html_str)
+
+            notes_html_str = render_to_string('offline/notes.html', {'notes':arch_notes,'links':subpage_links })
             z.writestr(os.path.join(archdir,self.NOTES_HTML), notes_html_str)
 
             #bookmarks

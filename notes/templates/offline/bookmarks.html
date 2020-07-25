@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'offline/base.html' %}
 {% block content %}
 <div class="row align-items-center mh-100">
   <div class="col-sm-6 mx-auto mt-5">
@@ -7,7 +7,7 @@
     <a href="{{ bookmark.url }}">
     <div class="card link-card shadow-sm mb-2 bg-white">
       <div class="card-body d-flex align-items-center ml-2 ">
-        <img width="24" height="24" src="https://www.google.com/s2/favicons?sz=64&domain_url={{ bookmark.url }}" />
+        <img width="24" height="24" src="{{ links.images }}/www.png" />
         <div class="flex-wrap ml-3">
           <h6 class="link-head mb-0">{{ bookmark.title }}</h6>
           <p class="card-text text-muted link-text">{{ bookmark.url }}</p>
