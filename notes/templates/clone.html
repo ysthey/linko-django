@@ -9,7 +9,7 @@
         $("#fileready").hide();
         setInterval(function(){ 
             $.ajax({
-              url: '/check_archive_status/',
+              url: '/check_archive_status/{{ category }}/',
               type: 'post',
               data: {
                   name: "all"
@@ -27,7 +27,7 @@
               }
             });
 
-        }, 2000);
+        }, 5000);
   
     };
   </script>
@@ -36,7 +36,7 @@
 
 <div id="fileready" >
 <div class="pt-2 mb-4">Your file is ready for Download</div>
-<a href="{% url 'download_clone' %}"><div class="btn btn-primary rounded-1  btn-block mb-3">Download</div></a>
+<a href="{% url 'download_clone' category %}"><div class="btn btn-primary rounded-1  btn-block mb-3">Download</div></a>
 </div>
 {% else %}
 <div class="text-muted pb-2"><h6>You aren't logged in!<a href="{% url 'login' %}" style="color:blue;"> Click here to Login</a></h6></div>

@@ -10,7 +10,7 @@ from .forms import PostForm, UpdateForm, LinkForm, ContactForm, CategoryForm, Up
 from .serializers import CategorySerializer
 from django.db.models.functions import Length, Upper, Lower
 from django.shortcuts import redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponseNotFound,HttpResponse, JsonResponse
 from .archive_manager import ArchiveManager
 import os
 
@@ -93,22 +93,30 @@ class UpdateNoteView(UpdateView):
     #fields = ['title', 'body']
 
 
-def CloneView(request):
 
-    bookmarks = Bookmark.objects.all()
-    contacts = Contacts.objects.all()
-    notes = Post.objects.all()
-    files = Map.objects.all()
-    ArchiveManager.get_instance().archive(files, notes, bookmarks, contacts)
-    return render(request, 'clone.html')
+def CloneView(request, cats='all'):
 
-def check_archive_status(request):
-    result = {"ready": not ArchiveManager.get_instance().is_archiving()}
+    bookmarks = Bookmark.objects.all().order_by('title')
+
+    contacts = Contacts.objects.all().order_by('Name')
+
+    notes = Post.objects.all().order_by('title')
+
+    if cats != 'all':
+        files = Map.objects.filter(category=cats.replace('-', ' ')).order_by('name')
+    else:
+        files = Map.objects.all().order_by('name')
+
+    ArchiveManager.get_instance().archive(files, notes, bookmarks, contacts, cats)
+    return render(request, 'clone.html', {"category": cats})
+
+def check_archive_status(request,cats='all'):
+    result = {"ready": not ArchiveManager.get_instance().is_archiving(cats)}
     return  JsonResponse(result)
 
-def download_clone(request):
+def download_clone(request,cats='all'):
     # fill these variables with real values
-    fl_path = ArchiveManager.get_instance().get_clone_file('all')
+    fl_path = ArchiveManager.get_instance().get_clone_file(cats)
     if fl_path == None:
         return HttpResponseNotFound()
 
@@ -122,12 +130,12 @@ def download_clone(request):
 
 def CategoryView(request, cats):
     category_notes = Post.objects.filter(category=cats.replace('-', ' '))
-    return render(request, 'categories.html', {'cats':cats.title().replace('-', ' '), 'category_notes':category_notes})
+    return render(request, 'categories.html', {'title':cats.title().replace('-', ' '), 'category_notes':category_notes,'cats':cats})
 
 
 def CategoryFilesView(request, cats):
     category_files = Map.objects.filter(category=cats.replace('-', ' '))
-    return render(request, 'categoriesfiles.html', {'cats':cats.title().replace('-', ' '), 'category_files':category_files})
+    return render(request, 'categoriesfiles.html', {'title':cats.title().replace('-', ' '), 'category_files':category_files, 'cats':cats})
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """

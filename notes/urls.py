@@ -38,9 +38,9 @@ urlpatterns = [
     path('files/', FilesView.as_view(), name='files'),
     path('upload/', model_form_upload , name='uploads'),
     path('download/<int:pk>', download_file, name='download'),
-    path('clone/', CloneView, name='clone'),
-    path('check_archive_status/', check_archive_status, name='check_archive_status'),
-    path('download_clone', download_clone, name='download_clone'),
+    path('clone/<str:cats>/', CloneView, name='clone'),
+    path('check_archive_status/<str:cats>/', check_archive_status, name='check_archive_status'),
+    path('download_clone/<str:cats>/', download_clone, name='download_clone'),
 
     path('login/', views.LoginView.as_view(template_name="login.html",authentication_form=UserLoginForm), name='login')
 

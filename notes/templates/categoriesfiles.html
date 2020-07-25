@@ -3,7 +3,7 @@
  <div class="row align-items-center mh-100">
         <div class="col-sm-6 mx-auto mt-5">
       {% if user.is_authenticated %}
-     <div class="text-muted pb-2"><h6>{{ cats }}</h6></div>
+     <div class="text-muted pb-2"><h6 class="d-inline mr-5">{{ title }}</h6><a class="d-inline" href="{% url 'clone' cats %}"><div class="btn btn-secondary btn-sm d-inline">Clone {{ cats }}</div></a></div>
 {% for post in category_files%}
     <div class="card link-card shadow-sm mb-2 bg-white">
   <div class="card-body d-flex align-items-center ml-2 ">
