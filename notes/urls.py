@@ -1,6 +1,6 @@
 from django.urls import path
 from django.conf.urls  import url, include
-from .views import CategoryViewSet, CategoryFilesView, download_file, searchfiles, FilesView, searchlinks, searchcontacts, search, HomePage, HomeView, NotesDetailView, AddNoteView, UpdateNoteView, AddCategoryView, CategoryView, LinkView, AddLinkView, AddContactView,ContactsView, model_form_upload
+from .views import download_clone,check_archive_status,CloneView, CategoryViewSet, CategoryFilesView, download_file, searchfiles, FilesView, searchlinks, searchcontacts, search, HomePage, HomeView, NotesDetailView, AddNoteView, UpdateNoteView, AddCategoryView, CategoryView, LinkView, AddLinkView, AddContactView,ContactsView, model_form_upload
 from notes.forms import UserLoginForm
 from django.contrib.auth import views
 from rest_framework import routers
@@ -38,6 +38,9 @@ urlpatterns = [
     path('files/', FilesView.as_view(), name='files'),
     path('upload/', model_form_upload , name='uploads'),
     path('download/<int:pk>', download_file, name='download'),
+    path('clone/', CloneView, name='clone'),
+    path('check_archive_status/', check_archive_status, name='check_archive_status'),
+    path('download_clone', download_clone, name='download_clone'),
 
     path('login/', views.LoginView.as_view(template_name="login.html",authentication_form=UserLoginForm), name='login')
 

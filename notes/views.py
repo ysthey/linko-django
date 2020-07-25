@@ -10,7 +10,8 @@ from .forms import PostForm, UpdateForm, LinkForm, ContactForm, CategoryForm, Up
 from .serializers import CategorySerializer
 from django.db.models.functions import Length, Upper, Lower
 from django.shortcuts import redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from .archive_manager import ArchiveManager
 import os
 
 import mimetypes
@@ -93,9 +94,38 @@ class UpdateNoteView(UpdateView):
     template_name = 'update_note.html'
     #fields = ['title', 'body']
 
+
+def CloneView(request):
+
+    bookmarks = Bookmark.objects.all()
+    contacts = Contacts.objects.all()
+    notes = Post.objects.all()
+    files = Map.objects.all()
+    ArchiveManager.get_instance().archive(files, notes, bookmarks, contacts)
+    return render(request, 'clone.html')
+
+def check_archive_status(request):
+    result = {"ready": not ArchiveManager.get_instance().is_archiving()}
+    return  JsonResponse(result)
+
+def download_clone(request):
+    # fill these variables with real values
+    fl_path = ArchiveManager.get_instance().get_clone_file('all')
+    if fl_path == None:
+        return HttpResponseNotFound()
+
+    filename = os.path.basename(fl_path)
+
+    fl = open(fl_path, 'rb')
+    mime_type, _ = mimetypes.guess_type(fl_path)
+    response = HttpResponse(fl, content_type=mime_type)
+    response['Content-Disposition'] = "attachment; filename=%s" % filename
+    return response
+
 def CategoryView(request, cats):
     category_notes = Post.objects.filter(category=cats.replace('-', ' '))
     return render(request, 'categories.html', {'cats':cats.title().replace('-', ' '), 'category_notes':category_notes})
+
 
 def CategoryFilesView(request, cats):
     category_files = Map.objects.filter(category=cats.replace('-', ' '))

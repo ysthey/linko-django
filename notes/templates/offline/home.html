@@ -1,0 +1,43 @@
+{% extends 'offline/base.html' %}
+
+{% block content %}
+
+      <div class="mt-5">
+          <div class= "row ">
+              <div class="col-md-8 ">
+                    <div class="page-title mt-5">
+                            <h2>Manage your Bookmarks</h2>
+                      </div>
+                         <p class="sub mt-3">Save everything you find interesting </p>
+                            <div class=" card-layout d-flex mt-5">
+                        <a href="{{ links.notes }}"><div class="card card-tap card-block d-flex mr-4 border-0"  style="background:#FDE4BC; height: 120px; width:120px;"><div class="card-body align-items-center d-flex justify-content-center"><svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-sticky-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M2.5 1A1.5 1.5 0 0 0 1 2.5v11A1.5 1.5 0 0 0 2.5 15h6.086a1.5 1.5 0 0 0 1.06-.44l4.915-4.914A1.5 1.5 0 0 0 15 8.586V2.5A1.5 1.5 0 0 0 13.5 1h-11zm6 8.5v4.396c0 .223.27.335.427.177l5.146-5.146a.25.25 0 0 0-.177-.427H9.5a1 1 0 0 0-1 1z"/>
+</svg></div></div></a>
+                          <a href="{{ links.bookmarks }}"><div class="card card-tap card-block d-flex mr-4 border-0" style="background:#e9f0c0; height: 120px; width:120px;"><div class="card-body align-items-center d-flex justify-content-center"><svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-link-45deg" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4.715 6.542L3.343 7.914a3 3 0 1 0 4.243 4.243l1.828-1.829A3 3 0 0 0 8.586 5.5L8 6.086a1.001 1.001 0 0 0-.154.199 2 2 0 0 1 .861 3.337L6.88 11.45a2 2 0 1 1-2.83-2.83l.793-.792a4.018 4.018 0 0 1-.128-1.287z"/>
+  <path d="M5.712 6.96l.167-.167a1.99 1.99 0 0 1 .896-.518 1.99 1.99 0 0 1 .518-.896l.167-.167A3.004 3.004 0 0 0 6 5.499c-.22.46-.316.963-.288 1.46z"/>
+  <path d="M6.586 4.672A3 3 0 0 0 7.414 9.5l.775-.776a2 2 0 0 1-.896-3.346L9.12 3.55a2 2 0 0 1 2.83 2.83l-.793.792c.112.42.155.855.128 1.287l1.372-1.372a3 3 0 0 0-4.243-4.243L6.586 4.672z"/>
+  <path d="M10 9.5a2.99 2.99 0 0 0 .288-1.46l-.167.167a1.99 1.99 0 0 1-.896.518 1.99 1.99 0 0 1-.518.896l-.167.167A3.004 3.004 0 0 0 10 9.501z"/>
+</svg></div></div></a>
+                           <a href="{{ links.contacts }}"><div class="card card-tap card-block d-flex mr-4 border-0" style="background:#F6F8FB; height: 120px; width:120px;"><div class="card-body align-items-center d-flex justify-content-center"><svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-person-lines-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7 1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm2 9a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+</svg></div></div></a>
+                          <a href="{{ links.files }}"><div class="card card-tap card-block d-flex mr-4 border-0" style="background:#DEF3FD; height: 120px; width:120px;"><div class="card-body align-items-center d-flex justify-content-center"><svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-file-earmark-arrow-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4 1h5v1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6h1v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2z"/>
+  <path d="M9 4.5V1l5 5h-3.5A1.5 1.5 0 0 1 9 4.5z"/>
+  <path fill-rule="evenodd" d="M5.646 8.854a.5.5 0 0 0 .708 0L8 7.207l1.646 1.647a.5.5 0 0 0 .708-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0 0 .708z"/>
+  <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 0-1 0v4a.5.5 0 0 0 .5.5z"/>
+</svg></div></div></a>
+
+                         </div>
+                      </div>
+                      <div class="col-lg-4 mt-5">
+                       <img src = "https://raw.githubusercontent.com/CS15/cs15.github.io/a685c470060806d23581d4c1a1e1c241f4c28364/undraw_save_to_bookmarks_y708.svg" width="100%" height="100%">
+                       </div>
+               </div>
+               
+         
+  </div>
+
+  
+{% endblock %}

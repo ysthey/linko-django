@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+ <div class="row align-items-center mh-100">
+        <div class="col-sm-6 mx-auto mt-5">
+{% if user.is_authenticated %}
+
+<script>
+    window.onload = function(){
+        $("#fileready").hide();
+        setInterval(function(){ 
+            $.ajax({
+              url: '/check_archive_status/',
+              type: 'post',
+              data: {
+                  name: "all"
+              },
+              headers: {'X-CSRFToken': '{{ csrf_token }}'},
+              dataType: 'json',
+              success: function (data) {
+                  if (data["ready"] === true){
+                      $("#filenotready").hide();
+                      $("#fileready").show();
+                  }
+              },
+              error: function(jq,ts){
+                  console.log(jq);
+              }
+            });
+
+        }, 2000);
+  
+    };
+  </script>
+    
+<div id="filenotready" class="pt-2 mb-4">We are cloning the website, please be patience. Thank you.</div>
+
+<div id="fileready" >
+<div class="pt-2 mb-4">Your file is ready for Download</div>
+<a href="{% url 'download_clone' %}"><div class="btn btn-primary rounded-1  btn-block mb-3">Download</div></a>
+</div>
+{% else %}
+<div class="text-muted pb-2"><h6>You aren't logged in!<a href="{% url 'login' %}" style="color:blue;"> Click here to Login</a></h6></div>
+{% endif %}
+{% endblock %}
+</div>
+</div>
