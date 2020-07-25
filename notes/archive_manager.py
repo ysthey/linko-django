@@ -1,4 +1,5 @@
 import multiprocessing as mp
+import urllib
 import zipfile
 import os
 from concurrent.futures import ThreadPoolExecutor
@@ -160,10 +161,11 @@ class ArchiveManager:
 
             # files
             for fr in file_records:
-                fn = os.path.basename(fr.file.url)
+                filepath = urllib.parse.unquote(fr.file.url,encoding='utf8')
+                fn = os.path.basename(filepath)
                 cat_path = os.path.join(fr.category,fn)
                 arch_path = os.path.join(archdir,cat_path)
-                z.write(fr.file.url,arch_path)
+                z.write(filepath,arch_path)
                 arch_file = ArchivedFile(fr.name,fr.category,fr.description,os.path.join('../',cat_path))
                 if fr.category in arch_cats_files:
                     arch_cats_files[fr.category].append(arch_file)

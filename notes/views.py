@@ -13,6 +13,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponseNotFound,HttpResponse, JsonResponse
 from .archive_manager import ArchiveManager
 import os
+import urllib
 
 import mimetypes
 
@@ -187,8 +188,9 @@ def model_form_upload(request):
 def download_file(request, pk=0):
     # fill these variables with real values
     myfile = Map.objects.get(pk=int(pk))
-    fl_path = myfile.file.url
-    filename = os.path.basename(fl_path)
+    fl_path = urllib.parse.unquote(myfile.file.url,encoding='utf8')
+    
+    filename = os.path.basename(myfile.file.url)
 
     fl = open(fl_path, 'rb')
     mime_type, _ = mimetypes.guess_type(fl_path)
