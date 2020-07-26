@@ -4,59 +4,61 @@ from django.contrib.auth.models import User
 from datetime import datetime,date
 
 # Create your models here.
+MAX_CATEGORY_LENGTH = 100
+MAX_TITLE_LENGTH = 100
+MAX_CONTACT_LENGTH = 100
+MAX_NAME_LENGTH = 255 
+MAX_EMAIL_LENGTH = 255 
+MAX_URL_LENGTH = 255 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True, blank=False)
+    name = models.CharField(max_length= MAX_CATEGORY_LENGTH, unique=True, blank=False)
 
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        return reverse('home')
     
 
-class Post(models.Model):
-    title = models.CharField(max_length=100)
+class Note(models.Model):
+    title = models.CharField(max_length=MAX_TITLE_LENGTH)
     body = models.TextField()
     created_date = models.DateField(auto_now_add=True)
-    category = models.CharField(max_length=255, default='tax-returns')
+    category = models.CharField(max_length=MAX_CATEGORY_LENGTH, default='tax-returns')
 
     def __str__(self):
         return self.title + ' | ' + str(self.category)
 
     def get_absolute_url(self):
-        return reverse('home')
+        return reverse('note-detail', kwargs={'pk': self.id})
 
 class Bookmark(models.Model):
-    title = models.CharField(max_length=100)
-    url = models.URLField(max_length=250)
+    title = models.CharField(max_length=MAX_TITLE_LENGTH)
+    url = models.URLField(max_length=MAX_URL_LENGTH)
     created_date = models.DateField(auto_now_add=True)
-    category = models.CharField(max_length=255, default='none')
+    category = models.CharField(max_length=MAX_CATEGORY_LENGTH, default='none')
     
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse('home')
 
-class Contacts(models.Model):
-    Name = models.CharField(max_length=100)
-    Email = models.EmailField(max_length=254, null=True, blank=True)
-    Contact = models.CharField(max_length=100, null=True, blank=True)
-    Note = models.CharField(max_length=255, null=True, blank=True)
+class Contact(models.Model):
+    name = models.CharField(max_length=MAX_NAME_LENGTH)
+    email = models.EmailField(max_length=MAX_EMAIL_LENGTH, null=True, blank=True)
+    contact = models.CharField(max_length=MAX_CONTACT_LENGTH, null=True, blank=True)
+    note = models.TextField(null=True, blank=True)
     created_date = models.DateField(auto_now_add=True)
     
     def __str__(self):
-        return self.Name
+        return self.name
 
     def get_absolute_url(self):
-        return reverse('home')
+        return reverse('contacts' )
+
 
 class Map(models.Model):
-    name = models.CharField(max_length=200)
-    description= models.CharField(max_length=10240, default='')
+    name = models.CharField(max_length=MAX_NAME_LENGTH)
+    description= models.TextField(null=True, blank=True)
     file = models.FileField(upload_to='media')
-    category = models.CharField(max_length=255, default='')
+    category = models.CharField(max_length=MAX_CATEGORY_LENGTH, default='')
 
     def __str__(self):
         return self.name

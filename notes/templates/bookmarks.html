@@ -3,7 +3,7 @@
 <div class="row align-items-center mh-100">
         <div class="col-sm-6 mx-auto mt-5">
         {% if user.is_authenticated %}
-      <form method="get" action="{% url 'searchcts' %}">
+      <form method="get" action="{% url 'searchbkms' %}">
         <input class="form-control search-box shadow-sm p-3 mb-5 bg-white mt-3" id="search" name="search" placeholder="Search your contacts..">
      </form>
      <div class="text-muted pb-2"><h6>Your Bookmarks</h6></div>

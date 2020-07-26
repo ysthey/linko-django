@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Post, Category, Bookmark, Contacts, Map
+from .models import Note, Category, Bookmark, Contact, Map
 # Register your models here.
 
-admin.site.register(Post)
+admin.site.register(Note)
 admin.site.register(Category)
 admin.site.register(Bookmark)
-admin.site.register(Contacts)
+admin.site.register(Contact)
 admin.site.register(Map)

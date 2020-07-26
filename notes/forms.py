@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Post, Category, Bookmark, Contacts, Map
+from .models import Note, Category, Bookmark, Contact, Map
 
 class CategoryForm(forms.ModelForm):
 
@@ -12,16 +12,16 @@ class CategoryForm(forms.ModelForm):
         }
     
 
-class PostForm(forms.ModelForm):
+class NoteForm(forms.ModelForm):
 
     category = forms.ModelChoiceField(queryset=None, widget=forms.Select(attrs={'class': 'form-control rounded-1'}))
    
     def __init__(self, *args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
+        super(NoteForm, self).__init__(*args, **kwargs)
         self.fields['category'].queryset = Category.objects.all()
 
     class Meta:
-        model = Post
+        model = Note
         fields = ('title', 'category', 'body')
         widgets = {
         'title': forms.TextInput(attrs={'class': 'form-control rounded-1'}),  
@@ -39,19 +39,19 @@ class LinkForm(forms.ModelForm):
 
 class ContactForm(forms.ModelForm):
     class Meta:
-        model = Contacts
-        fields = ('Name', 'Email', 'Contact', 'Note')
+        model = Contact
+        fields = ('name', 'email', 'contact', 'note')
         widgets = {
-        'Name': forms.TextInput(attrs={'class': 'form-control rounded-1'}),
-        'Email': forms.TextInput(attrs={'class': 'form-control rounded-1'}), 
-        'Contact': forms.TextInput(attrs={'class': 'form-control rounded-1'}),
-        'Note': forms.TextInput(attrs={'class': 'form-control rounded-1'}),
+        'name': forms.TextInput(attrs={'class': 'form-control rounded-1'}),
+        'email': forms.TextInput(attrs={'class': 'form-control rounded-1'}), 
+        'contact': forms.TextInput(attrs={'class': 'form-control rounded-1'}),
+        'note': forms.TextInput(attrs={'class': 'form-control rounded-1'}),
         }
 
 
 class UpdateForm(forms.ModelForm):
     class Meta:
-        model = Post
+        model = Note 
         fields = ('title', 'category', 'body')
         widgets = {
 

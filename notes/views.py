@@ -5,8 +5,8 @@ from rest_framework import viewsets
 from django.db.models import Q
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from .models import Post, Category, Bookmark, Contacts, Map
-from .forms import PostForm, UpdateForm, LinkForm, ContactForm, CategoryForm, UploadForm
+from .models import Note, Category, Bookmark, Contact, Map
+from .forms import NoteForm, UpdateForm, LinkForm, ContactForm, CategoryForm, UploadForm
 from .serializers import CategorySerializer
 from django.db.models.functions import Length, Upper, Lower
 from django.shortcuts import redirect
@@ -24,7 +24,7 @@ def HomePage(request):
 
 
 class HomeView(ListView):    
-    model = Post
+    model = Note 
     template_name = 'home.html'
     ordering = [Lower('category')]
     paginate_by = 10
@@ -50,18 +50,18 @@ class LinkView(ListView):
     paginate_by = 10
 
 class ContactsView(ListView):
-    model = Contacts
+    model = Contact
     template_name = 'contacts.html'
-    ordering = [Lower('Name')]
+    ordering = [Lower('name')]
     paginate_by = 10
 
 class NotesDetailView(DetailView):
-    model = Post
+    model = Note 
     template_name = 'note_details.html'
 
 class AddNoteView(CreateView):
-    model = Post
-    form_class = PostForm
+    model = Note
+    form_class = NoteForm
     template_name = 'add_note.html'
     #fields = '__all__'
 
@@ -74,7 +74,7 @@ class AddLinkView(CreateView):
         return reverse('bookmarks')
 
 class AddContactView(CreateView):
-    model = Contacts
+    model = Contact
     form_class = ContactForm
     template_name = 'addcontact.html'
 
@@ -88,7 +88,7 @@ class AddCategoryView(CreateView):
     
 
 class UpdateNoteView(UpdateView):
-    model = Post
+    model = Note
     form_class = UpdateForm
     template_name = 'update_note.html'
     #fields = ['title', 'body']
@@ -99,9 +99,9 @@ def CloneView(request, cats='all'):
 
     bookmarks = Bookmark.objects.all().order_by('title')
 
-    contacts = Contacts.objects.all().order_by('Name')
+    contacts = Contact.objects.all().order_by('name')
 
-    notes = Post.objects.all().order_by('title')
+    notes = Note.objects.all().order_by('title')
 
     if cats != 'all':
         files = Map.objects.filter(category=cats.replace('-', ' ')).order_by('name')
@@ -130,7 +130,7 @@ def download_clone(request,cats='all'):
     return response
 
 def CategoryView(request, cats):
-    category_notes = Post.objects.filter(category=cats.replace('-', ' '))
+    category_notes = Note.objects.filter(category=cats.replace('-', ' '))
     return render(request, 'categories.html', {'title':cats.title().replace('-', ' '), 'category_notes':category_notes,'cats':cats})
 
 
@@ -150,7 +150,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 def search(request):
     search = request.GET['search']
-    object_list = Post.objects.filter(Q(title__icontains=search) | Q(category__icontains=search))
+    object_list = Note.objects.filter(Q(title__icontains=search) | Q(category__icontains=search))
     params = {'object_list': object_list}
     return render(request, 'search.html', params)
 
@@ -162,7 +162,7 @@ def searchlinks(request):
 
 def searchcontacts(request):
     search = request.GET['search']
-    object_list = Contacts.objects.filter(Q(Email__icontains=search) | Q(Name__icontains=search))
+    object_list = Contact.objects.filter(Q(email__icontains=search) | Q(name__icontains=search))
     params = {'object_list': object_list}
     return render(request, 'searchcts.html', params)
 
@@ -178,7 +178,7 @@ def model_form_upload(request):
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('uploads')
+            return redirect('files')
     else:
         form = UploadForm()
     return render(request, 'form_upload.html', {
