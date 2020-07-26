@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from datetime import datetime,date
+import os
 
 # Create your models here.
 MAX_CATEGORY_LENGTH = 100
@@ -62,3 +63,6 @@ class Map(models.Model):
 
     def __str__(self):
         return self.name
+
+    def basename(self):
+        return os.path.basename(self.file.url)

@@ -78,6 +78,8 @@ class ArchivedFile:
         self.path = path
         self.description = description
         self.category = category
+    def basename(self):
+        return os.path.basename(self.path)
 
 class ArchivedNote:
     def __init__(self, title, category, body, created_date, path):
