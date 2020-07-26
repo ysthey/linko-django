@@ -15,7 +15,7 @@
     <div class="flex-wrap ml-3">
     <h6 class="link-head mb-0">{{ bookmark.title }}</h6>
         <p class="card-text text-muted link-text mb-0">{{ bookmark.created_date }}
-          <a href="#">
+          <a href="{% url 'categorylinks' bookmark.category %}">
             <span class="badge rounded-pill bg-light text-dark">{{ bookmark.category }}</span>
           </a>
         </p>
