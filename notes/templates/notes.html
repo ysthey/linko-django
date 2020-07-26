@@ -30,8 +30,8 @@
 {% endfor %}
 
 <!-- Colored FAB button -->
-<div class="w-100 fixed-bottom p-5 click-through">
-  <a href="{% url 'add_note' %}" class="btn-floating btn-large indigo float-right m-5 non-click-through">
+<div id="fabcontainer" class="w-100 fixed-bottom click-through ">
+  <a href="{% url 'add_note' %}" class="btn-floating btn-large indigo float-right non-click-through">
 <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored " >
   <i class="material-icons">add</i>
 </button>
