@@ -35,9 +35,10 @@ class LinkForm(forms.ModelForm):
         self.fields['category'].queryset = Category.objects.all()
     class Meta:
         model = Bookmark
-        fields = ('title', 'category', 'url')
+        fields = ('title', 'description', 'category', 'url')
         widgets = {
         'title': forms.TextInput(attrs={'class': 'form-control rounded-1'}),
+        'description': forms.TextInput(attrs={'class': 'form-control'}),
         'url': forms.URLInput(attrs={'class': 'form-control rounded-1'}), 
         }
 

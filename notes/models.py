@@ -35,6 +35,7 @@ class Bookmark(models.Model):
     url = models.URLField(max_length=MAX_URL_LENGTH)
     created_date = models.DateField(auto_now_add=True)
     category = models.CharField(max_length=MAX_CATEGORY_LENGTH, default='')
+    description= models.TextField(null=True, blank=True)
     
     def __str__(self):
         return self.title
