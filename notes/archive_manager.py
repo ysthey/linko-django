@@ -207,6 +207,8 @@ class ArchiveManager:
                 
 
             #allfiles
+
+            arch_files.sort(key=lambda x:x.name)
             files_html_str = render_to_string('offline/files.html', {'page_title':'Your Files', 'files':arch_files, 'links':subpage_links})
             z.writestr(os.path.join(archdir,self.FILES_HTML), files_html_str)
 
@@ -226,6 +228,7 @@ class ArchiveManager:
                 notes_html_str = render_to_string('offline/notes.html', {'page_title':k , 'notes':v, 'links':subpage_links})
                 z.writestr(os.path.join(archdir,self.CATS_NOTES_HTML.format(k)), notes_html_str)
 
+            arch_notes.sort(key=lambda x:x.title)
             notes_html_str = render_to_string('offline/notes.html', {'page_title':'Your Notes' ,'notes':arch_notes,'links':subpage_links })
             z.writestr(os.path.join(archdir,self.NOTES_HTML), notes_html_str)
 
@@ -244,6 +247,7 @@ class ArchiveManager:
                 z.writestr(os.path.join(archdir,self.CATS_LINKS_HTML.format(k)), links_html_str)
 
 
+            arch_links.sort(key=lambda x:x.title)
             bookmarks_html_str = render_to_string('offline/bookmarks.html', {'page_title':'Your Bookmarks' ,'bookmarks':bookmarks,'links':subpage_links })
             z.writestr(os.path.join(archdir,self.BOOKMARKS_HTML), bookmarks_html_str)
 
@@ -261,6 +265,7 @@ class ArchiveManager:
                 z.writestr(os.path.join(archdir,self.CATS_CONTACTS_HTML.format(k)), contacts_html_str)
 
 
+            arch_contacts.sort(key=lambda x:x.name)
             contacts_html_str = render_to_string('offline/contacts.html', {'page_title':'Your Contacts', 'contacts':contacts,'links':subpage_links })
             z.writestr(os.path.join(archdir,self.CONTACTS_HTML), contacts_html_str)
 
