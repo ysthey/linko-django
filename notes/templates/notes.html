@@ -20,7 +20,18 @@
 {% empty %}
 <div class="text-muted pb-2"><h6>No results founds.</h6></div>
 {% endfor %}
- 
+
+
+<!-- Colored FAB button -->
+<div class="w-100 fixed-bottom p-3"><a href="{% url 'add_note' %}" class="btn-floating btn-large indigo float-right ">
+<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" >
+  <i class="material-icons">add</i>
+</button>
+ </a> 
+</div>
+
+
+
      <ul class="pagination">
         {% if page_obj.has_previous %}
             <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
@@ -39,4 +50,12 @@
 
    </div>
 </div>
+<script>
+
+
+$(document).ready(function(){
+    $('.fixed-action-btn').floatingActionButton();
+  });
+
+</script>
 {% endblock %}

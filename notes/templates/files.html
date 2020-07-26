@@ -22,6 +22,15 @@
 {% empty %}
 <div class="text-muted pb-2"><h6>No results founds.</h6></div>
 {% endfor %}
+<!-- Colored FAB button -->
+<div class="w-100 fixed-bottom p-3">
+   <a href="{% url 'uploads' %}" class="btn-floating btn-large indigo float-right ">
+   <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" >
+     <i class="material-icons">add</i>
+   </button>
+    </a> 
+</div>
+
  
      <ul class="pagination">
         {% if page_obj.has_previous %}
