@@ -150,8 +150,8 @@ class ArchiveManager:
                 ok= True
 
         if ok is True:
-            self.__executor.submit(self.process, file_records, notes, bookmarks, contacts, cat)
-            #self.process(file_records, notes, bookmarks, contacts,cat)
+            #self.__executor.submit(self.process, file_records, notes, bookmarks, contacts, cat)
+            self.process(file_records, notes, bookmarks, contacts,cat)
 
     def is_archiving(self, cat='all'):
         res = False
