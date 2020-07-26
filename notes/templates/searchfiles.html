@@ -13,9 +13,14 @@
   <div class="card-body d-flex align-items-center ml-2 ">
         <div class="flex-wrap ml-3">
      <a href="{% url 'download' post.pk %}"><h6 class="link-head mb-0">{{ post.name}}</h6></a>
+        <p class="card-text text-muted link-text mb-0">{{ post.created_date }}
+          <a href="{% url 'categoryfiles' post.category|slugify %}">
+            <span class="badge rounded-pill bg-light text-dark">{{ post.category }}</span>
+          </a>
+        </p>
     <p class="card-text muted mb-0">{{ post.description }}</p>
    <p class="card-text text-muted link-text ">{{ post.file }}</p>
- <a href="{% url 'categoryfiles' post.category|slugify %}"><span class="badge rounded-pill bg-light text-dark">{{ post.category }}</span></a>
+
     </div>
   </div>
 </div>

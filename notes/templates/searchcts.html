@@ -13,6 +13,13 @@
     <img src="https://img.icons8.com/bubbles/50/000000/guest-male.png" width="56" height="56"/>
         <div class="flex-wrap ml-3">
     <h6 class="link-head mb-0">{{ contact.name }}</h6>
+        <p class="card-text text-muted link-text mb-0">{{ contact.created_date }}
+
+          <a href="{% url 'categorycontacts' contact.category %}">
+            <span class="badge rounded-pill bg-light text-dark">{{ contact.category }}</span>
+          </a>
+        </p>
+
     <p class="card-text text-muted link-text mb-0">{{ contact.email }}</p>
    <p class="card-text text-muted link-text ">{{ contact.contact }}</p>
     </div>
