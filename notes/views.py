@@ -25,8 +25,8 @@ def HomePage(request):
 
 class HomeView(ListView):    
     model = Note 
-    template_name = 'home.html'
-    ordering = [Lower('category')]
+    template_name = 'notes.html'
+    ordering = [Lower('title')]
     paginate_by = 10
 
     def get_context_data(self,*args, **kwargs):
