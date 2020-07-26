@@ -9,7 +9,7 @@
       <div class="card-body d-flex align-items-center ml-2 ">
         <div class="flex-wrap ml-3">
           <a href="{{ post.path }}"><h6 class="link-head mb-0">{{ post.title }}</h6></a>
-          <p class="card-text text-muted link-text mb-0">{{ post.created_date }}<a href="{% url 'category' post.category|slugify %}"><span class="badge rounded-pill bg-light text-dark">{{ post.category }}</span></a></p>
+          <p class="card-text text-muted link-text mb-0">{{ post.created_date }}<a href="notes_{{ post.category }}.html"><span class="badge rounded-pill bg-light text-dark">{{ post.category }}</span></a></p>
           <p class="card-text text-muted link-text ">{{ post.body|slice:":200" }}</p>
         </div>
       </div>

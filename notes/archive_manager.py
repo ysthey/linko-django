@@ -98,6 +98,7 @@ class ArchiveManager:
     FNAME_TMPL = "archive_{}.zip"
     FILES_HTML = "html/files.html"
     CATS_FILES_HTML = "html/files_{}.html"
+    CATS_NOTES_HTML = "html/notes_{}.html"
     NOTES_HTML = "html/notes.html"
     NOTE_HTML = "html/notes/note_{}.html"
     BOOKMARKS_HTML = "html/bookmarks.html"
@@ -151,6 +152,7 @@ class ArchiveManager:
         archdir='archive_{}'.format(cat)
         arch_files = []
         arch_notes = []
+        arch_cats_notes = {}
         arch_cats_files = {}
         static_files = [(x, os.path.join(archdir,x.replace('./offline_statics/',''))) for x in glob.iglob("./offline_statics/**/*.*",recursive=True) if os.path.isfile(x) ]
         print(static_files)
@@ -185,11 +187,21 @@ class ArchiveManager:
 
             #notes
             for note in notes:
+                arch_note = ArchivedNote(note.title,note.category,note.body, note.created_date, os.path.join('notes','note_{}.html'.format(note.id)))
                 note_html_str = render_to_string('offline/note.html', {'note':note,'links':subsubpage_links })
-                arch_notes.append(ArchivedNote(note.title,note.category,note.body, note.created_date, os.path.join('notes','note_{}.html'.format(note.id))))
+                if note.category in arch_cats_notes:
+                    arch_cats_notes[note.category].append(arch_note)
+                else:
+                    arch_cats_notes[note.category] = [arch_note]
+                arch_notes.append(arch_note)
                 z.writestr(os.path.join(archdir,self.NOTE_HTML.format(note.id)), note_html_str)
 
-            notes_html_str = render_to_string('offline/notes.html', {'notes':arch_notes,'links':subpage_links })
+
+            for k, v in arch_cats_notes.items():
+                notes_html_str = render_to_string('offline/notes.html', {'page_title':k , 'notes':v, 'links':subpage_links})
+                z.writestr(os.path.join(archdir,self.CATS_NOTES_HTML.format(k)), notes_html_str)
+
+            notes_html_str = render_to_string('offline/notes.html', {'page_title':k ,'notes':arch_notes,'links':subpage_links })
             z.writestr(os.path.join(archdir,self.NOTES_HTML), notes_html_str)
 
             #bookmarks

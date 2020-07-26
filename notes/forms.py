@@ -29,18 +29,26 @@ class NoteForm(forms.ModelForm):
         }
 
 class LinkForm(forms.ModelForm):
+    category = forms.ModelChoiceField(queryset=None, widget=forms.Select(attrs={'class': 'form-control rounded-1'}))
+    def __init__(self, *args, **kwargs):
+        super(LinkForm, self).__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.all()
     class Meta:
         model = Bookmark
-        fields = ('title', 'url')
+        fields = ('title', 'category', 'url')
         widgets = {
         'title': forms.TextInput(attrs={'class': 'form-control rounded-1'}),
         'url': forms.URLInput(attrs={'class': 'form-control rounded-1'}), 
         }
 
 class ContactForm(forms.ModelForm):
+    category = forms.ModelChoiceField(queryset=None, widget=forms.Select(attrs={'class': 'form-control rounded-1'}))
+    def __init__(self, *args, **kwargs):
+        super(ContactForm, self).__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.all()
     class Meta:
         model = Contact
-        fields = ('name', 'email', 'contact', 'note')
+        fields = ('name', 'category','email', 'contact', 'note')
         widgets = {
         'name': forms.TextInput(attrs={'class': 'form-control rounded-1'}),
         'email': forms.TextInput(attrs={'class': 'form-control rounded-1'}), 

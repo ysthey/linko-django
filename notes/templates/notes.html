@@ -6,14 +6,22 @@
       <form method="get" action="{% url 'search' %}">
         <input class="form-control search-box shadow-sm p-3 mb-5 bg-white mt-3" id="search" name="search" placeholder="Search your notes..">
      </form>
-     <div class="text-muted pb-2"><h6>Your Notes</h6></div>
+     <div class="text-muted pb-2"><h6>{{ page_title }}</h6></div>
 {% for post in object_list %}
-    <div class="card link-card shadow-sm mb-2 bg-white">
-  <div class="card-body d-flex align-items-center ml-2 ">
-        <div class="flex-wrap ml-3">
-     <a href="{% url 'note-detail' post.pk %}"><h6 class="link-head mb-0">{{ post.title }}</h6></a>
-    <p class="card-text text-muted link-text mb-0">{{ post.created_date }}<a href="{% url 'category' post.category|slugify %}"><span class="badge rounded-pill bg-light text-dark">{{ post.category }}</span></a></p>
-   <p class="card-text text-muted link-text ">{{ post.body|slice:":200" }}</p>
+
+  <div class="card link-card shadow-sm mb-2 bg-white">
+    <div class="card-body d-flex align-items-center ml-2 ">
+      <div class="flex-wrap ml-3">
+
+        <a href="{% url 'note-detail' post.pk %}">
+        <h6 class="link-head mb-0">{{ post.title }}</h6>
+        </a>
+        <p class="card-text text-muted link-text mb-0">{{ post.created_date }}
+          <a href="{% url 'category' post.category|slugify %}">
+            <span class="badge rounded-pill bg-light text-dark">{{ post.category }}</span>
+          </a>
+        </p>
+        <p class="card-text text-muted link-text ">{{ post.body|slice:":200" }}</p>
     </div>
   </div>
 </div>
@@ -21,15 +29,14 @@
 <div class="text-muted pb-2"><h6>No results founds.</h6></div>
 {% endfor %}
 
-
 <!-- Colored FAB button -->
-<div class="w-100 fixed-bottom p-3"><a href="{% url 'add_note' %}" class="btn-floating btn-large indigo float-right ">
-<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" >
+<div class="w-100 fixed-bottom p-5 click-through">
+  <a href="{% url 'add_note' %}" class="btn-floating btn-large indigo float-right m-5 non-click-through">
+<button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored " >
   <i class="material-icons">add</i>
 </button>
  </a> 
 </div>
-
 
 
      <ul class="pagination">
@@ -40,7 +47,7 @@
 
         <li class="page-item"> <a class="page-link">
             Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span></a></li>
+        </a></li>
 
         {% if page_obj.has_next %}
            <li class="page-item"> <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>

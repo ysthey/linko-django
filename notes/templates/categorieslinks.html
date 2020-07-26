@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+ <div class="row align-items-center mh-100">
+        <div class="col-sm-6 mx-auto mt-5">
+      {% if user.is_authenticated %}
+     <div class="text-muted pb-2"><h6 class="d-inline mr-5">{{ title }}</h6></div>
+
+{% for bookmark in category_list%}
+<a href="{{ bookmark.url }}">
+  <div class="card link-card shadow-sm mb-2 bg-white">
+  <div class="card-body d-flex align-items-center ml-2 ">
+    <img width="24" height="24" src="https://www.google.com/s2/favicons?sz=64&domain_url={{ bookmark.url }}" />
+    <div class="flex-wrap ml-3">
+    <h6 class="link-head mb-0">{{ bookmark.title }}</h6>
+        <p class="card-text text-muted link-text mb-0">{{ bookmark.created_date }}
+          <a href="#">
+            <span class="badge rounded-pill bg-light text-dark">{{ bookmark.category }}</span>
+          </a>
+        </p>
+
+    <p class="card-text text-muted link-text">{{ bookmark.url }}</p>
+    </div>
+  </div>
+</a>
+{% endfor %}
+</div>
+</div>
+
+{% else %}
+<div class="text-muted pb-2"><h6>You aren't logged in!<a href="{% url 'login' %}" style="color:blue;"> Click here to Login</a></h6></div>
+{% endif %}
+
+
+{% endblock %}

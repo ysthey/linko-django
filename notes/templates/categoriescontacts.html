@@ -1,21 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="row align-items-center mh-100">
+ <div class="row align-items-center mh-100">
         <div class="col-sm-6 mx-auto mt-5">
       {% if user.is_authenticated %}
-      <form method="get" action="{% url 'searchcts' %}">
-        <input class="form-control search-box shadow-sm p-3 mb-5 bg-white mt-3" id="search" name="search" placeholder="Search your contacts..">
-     </form>
-     <div class="text-muted pb-2"><h6>Your Contacts</h6></div>
-{% for contact in object_list %}
- <div class="card link-card shadow-sm mb-2 bg-white">
+     <div class="text-muted pb-2"><h6 class="d-inline mr-5">{{ title }}</h6></div>
+{% for contact in category_list%}
+ <div class="card ink-card shadow-sm mb-2 bg-white">
   <div class="card-body d-flex align-items-center ml-2 ">
     <img src="https://img.icons8.com/bubbles/50/000000/guest-male.png" width="56" height="56"/>
         <div class="flex-wrap ml-3">
     <h6 class="link-head mb-0">{{ contact.name }}</h6>
         <p class="card-text text-muted link-text mb-0">{{ contact.created_date }}
-
-          <a href="{% url 'categorycontacts' contact.category %}">
+          <a href="#">
             <span class="badge rounded-pill bg-light text-dark">{{ contact.category }}</span>
           </a>
         </p>
@@ -25,23 +21,13 @@
     </div>
   </div>
 </div>
-{% empty %}
-<div class="text-muted pb-2"><h6>No results founds.</h6></div>
 {% endfor %}
-<!-- Colored FAB button -->
-
-<div class="w-100 fixed-bottom p-5 click-through">
-  <a href="{% url 'add_contact' %}" class="btn-floating btn-large indigo float-right m-5 non-click-through">
-  <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" >
-    <i class="material-icons">add</i>
-  </button>
-   </a> 
-</div>
-
-
 </div>
 </div>
+
 {% else %}
 <div class="text-muted pb-2"><h6>You aren't logged in!<a href="{% url 'login' %}" style="color:blue;"> Click here to Login</a></h6></div>
 {% endif %}
+
+
 {% endblock %}

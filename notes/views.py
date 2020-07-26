@@ -138,6 +138,16 @@ def CategoryFilesView(request, cats):
     category_files = Map.objects.filter(category=cats.replace('-', ' '))
     return render(request, 'categoriesfiles.html', {'title':cats.title().replace('-', ' '), 'category_files':category_files, 'cats':cats})
 
+def CategoryLinksView(request, cats):
+    category_list = Bookmark.objects.filter(category=cats.replace('-', ' '))
+    return render(request, 'categorieslinks.html', {'title':cats.title().replace('-', ' '), 'category_list':category_list, 'cats':cats})
+
+
+def CategoryContactsView(request, cats):
+    category_list = Contact.objects.filter(category=cats.replace('-', ' '))
+    return render(request, 'categoriescontacts.html', {'title':cats.title().replace('-', ' '), 'category_list':category_list, 'cats':cats})
+
+
 class CategoryViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows categories to be viewed or edited.

@@ -46,6 +46,7 @@ class Contact(models.Model):
     contact = models.CharField(max_length=MAX_CONTACT_LENGTH, null=True, blank=True)
     note = models.TextField(null=True, blank=True)
     created_date = models.DateField(auto_now_add=True)
+    category = models.CharField(max_length=MAX_CATEGORY_LENGTH, default='')
     
     def __str__(self):
         return self.name

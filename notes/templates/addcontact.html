@@ -11,6 +11,14 @@
     <ul>
     <label for="exampleFormControlInput1" class="form-label">Name</label>
     <li id="email" class="contact">{{ form.name }}</li>
+    <label for="exampleFormControlInput1" class="form-label mt-4">Category</label>
+    <div id="addcategory" class="btn btn-sm d-inline" ><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+      <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+      <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    </svg></div>
+    <li class="contact">{{ form.category }}</li>
+
     <label for="exampleFormControlInput1" class="form-label mt-4">Email</label>
     <li id="email" class="contact">{{ form.email }}</li>
     <label for="exampleFormControlInput1" class="form-label mt-4">Contact</label>
@@ -20,6 +28,69 @@
     </ul>
     </div>
     <input type="submit" class="btn btn-primary rounded-1 btn-block mb-3" value="Submit"></input>
+</form>
+<div id="dialog-form" title="New Category">
+  <form>
+    <fieldset class="justify-content-center text-center mt-3">
+      <label class="card-title d-block text-secondary" for="name">Add your category name here</label>
+      <input type="text" name="name" id="name" value="" class="text ui-widget-content ui-corner-all mt-3">
+    </fieldset>
+  </form>
+</div>
+
+<script>
+  window.onload = function(){
+      let dialog = $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 200,
+      width: 350,
+      modal: true,
+      dialogClass :"card card-body no-close",
+      buttons: {
+        "Create": ()=>{
+          let newcat = $( "#dialog-form #name" ).val();
+          if (newcat && newcat.trim().length > 0){
+            $.ajax({
+              url: '/categoryapi/',
+              type: 'post',
+              data: {
+                  name: newcat
+              },
+              headers: {'X-CSRFToken': '{{ csrf_token }}'},
+              dataType: 'json',
+              success: function (data) {
+                  dialog.dialog( "close" );
+                  window.location.reload();
+              },
+              error: function(jq,ts){
+                  dialog.dialog( "close" );
+              }
+            });
+          }
+
+          },
+        Cancel: function() {
+          dialog.dialog( "close" );
+        }
+      },
+      create: ()=>{
+        $(".ui-dialog").find(".ui-button") // the first button
+            .addClass("btn-primary");
+
+      },
+      close: function() {
+        //allFields.removeClass( "ui-state-error" );
+      }
+      });
+
+      $( "#addcategory" ).click(function() {
+          dialog.dialog( "open" );
+      });
+
+  };
+</script>
+
+
 {% else %}
 <div class="text-muted pb-2"><h6>You aren't logged in!<a href="{% url 'login' %}" style="color:blue;"> Click here to Login</a></h6></div>
 {% endif %}

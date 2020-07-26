@@ -1,6 +1,6 @@
 from django.urls import path
 from django.conf.urls  import url, include
-from .views import download_clone,check_archive_status,CloneView, CategoryViewSet, CategoryFilesView, download_file, searchfiles, FilesView, searchlinks, searchcontacts, search, HomePage, HomeView, NotesDetailView, AddNoteView, UpdateNoteView, AddCategoryView, CategoryView, LinkView, AddLinkView, AddContactView,ContactsView, model_form_upload
+from .views import CategoryContactsView,CategoryLinksView, download_clone,check_archive_status,CloneView, CategoryViewSet, CategoryFilesView, download_file, searchfiles, FilesView, searchlinks, searchcontacts, search, HomePage, HomeView, NotesDetailView, AddNoteView, UpdateNoteView, AddCategoryView, CategoryView, LinkView, AddLinkView, AddContactView,ContactsView, model_form_upload
 from notes.forms import UserLoginForm
 from django.contrib.auth import views
 from rest_framework import routers
@@ -18,10 +18,11 @@ urlpatterns = [
     path('notes/edit/<int:pk>', UpdateNoteView.as_view(), name='update-note'),
     path('category/<str:cats>/', CategoryView, name='category'),
     path('categoryfiles/<str:cats>/', CategoryFilesView, name='categoryfiles'),
+    path('categorylinks/<str:cats>/', CategoryLinksView, name='categorylinks'),
+    path('categorycontacts/<str:cats>/', CategoryContactsView, name='categorycontacts'),
     url(r'^', include(router.urls), name="categoryapi"),
 
     #bookmarks
-
     path('bookmarks/', LinkView.as_view(), name='bookmarks'),
     path('addbookmark/', AddLinkView.as_view(), name='add_link'),
 
