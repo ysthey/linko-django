@@ -31,9 +31,9 @@
 
 <div id="dialog-form" title="New Category">
   <form>
-    <fieldset>
-      <label for="name">Name</label>
-      <input type="text" name="name" id="name" value="" class="text ui-widget-content ui-corner-all">
+    <fieldset class="justify-content-center text-center mt-3">
+      <label class="card-title d-block text-secondary" for="name">Add your category name here</label>
+      <input type="text" name="name" id="name" value="" class="text ui-widget-content ui-corner-all mt-3">
     </fieldset>
   </form>
 </div>
@@ -45,6 +45,7 @@
       height: 200,
       width: 350,
       modal: true,
+      dialogClass :"card card-body no-close",
       buttons: {
         "Create": ()=>{
           let newcat = $( "#dialog-form #name" ).val();
@@ -66,10 +67,16 @@
               }
             });
           }
+
           },
         Cancel: function() {
           dialog.dialog( "close" );
         }
+      },
+      create: ()=>{
+        $(".ui-dialog").find(".ui-button") // the first button
+            .addClass("btn-primary");
+
       },
       close: function() {
         //allFields.removeClass( "ui-state-error" );
@@ -82,6 +89,7 @@
 
   };
 </script>
+
 {% else %}
 <div class="text-muted pb-2"><h6>You aren't logged in!<a href="{% url 'login' %}" style="color:blue;"> Click here to Login</a></h6></div>
 {% endif %}
