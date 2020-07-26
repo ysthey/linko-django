@@ -45,7 +45,7 @@ class ContactForm(forms.ModelForm):
         'name': forms.TextInput(attrs={'class': 'form-control rounded-1'}),
         'email': forms.TextInput(attrs={'class': 'form-control rounded-1'}), 
         'contact': forms.TextInput(attrs={'class': 'form-control rounded-1'}),
-        'note': forms.TextInput(attrs={'class': 'form-control rounded-1'}),
+        'note': forms.Textarea(attrs={'class': 'form-control rounded-1'}),
         }
 
 

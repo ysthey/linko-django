@@ -22,7 +22,7 @@ class Note(models.Model):
     title = models.CharField(max_length=MAX_TITLE_LENGTH)
     body = models.TextField()
     created_date = models.DateField(auto_now_add=True)
-    category = models.CharField(max_length=MAX_CATEGORY_LENGTH, default='tax-returns')
+    category = models.CharField(max_length=MAX_CATEGORY_LENGTH, default='')
 
     def __str__(self):
         return self.title + ' | ' + str(self.category)
@@ -34,7 +34,7 @@ class Bookmark(models.Model):
     title = models.CharField(max_length=MAX_TITLE_LENGTH)
     url = models.URLField(max_length=MAX_URL_LENGTH)
     created_date = models.DateField(auto_now_add=True)
-    category = models.CharField(max_length=MAX_CATEGORY_LENGTH, default='none')
+    category = models.CharField(max_length=MAX_CATEGORY_LENGTH, default='')
     
     def __str__(self):
         return self.title
@@ -50,15 +50,13 @@ class Contact(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('contacts' )
-
 
 class Map(models.Model):
     name = models.CharField(max_length=MAX_NAME_LENGTH)
     description= models.TextField(null=True, blank=True)
     file = models.FileField(upload_to='media')
     category = models.CharField(max_length=MAX_CATEGORY_LENGTH, default='')
+    created_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.name
