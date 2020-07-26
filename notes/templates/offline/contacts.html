@@ -2,13 +2,21 @@
 {% block content %}
 <div class="row align-items-center mh-100">
   <div class="col-sm-6 mx-auto mt-5">
-    <div class="text-muted pb-2"><h6>Your Contacts</h6></div>
+    <div class="text-muted pb-2"><h6>{{ page_title }}</h6></div>
     {% for contact in contacts %}
     <div class="card link-card shadow-sm mb-2 bg-white">
       <div class="card-body d-flex align-items-center ml-2 ">
         <img src="{{ links.images }}/guest-male.png" width="56" height="56"/>
         <div class="flex-wrap ml-3">
           <h6 class="link-head mb-0">{{ contact.name }}</h6>
+        <p class="card-text text-muted link-text mb-0">{{ contact.created_date }}
+
+          <a href="contacts_{{ contact.category }}.html">
+            <span class="badge rounded-pill bg-light text-dark">{{ contact.category }}</span>
+          </a>
+        </p>
+
+
           <p class="card-text text-muted link-text mb-0">{{ contact.email }}</p>
           <p class="card-text text-muted link-text ">{{ contact.contact }}</p>
         </div>

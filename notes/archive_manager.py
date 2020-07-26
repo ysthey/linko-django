@@ -36,7 +36,6 @@ subsubpage_links = {
 
 
 
-
 class IsRunningMap:
     def __init__(self):
         self.map = {}
@@ -88,6 +87,25 @@ class ArchivedNote:
         self.category = category
         self.path = path
 
+class ArchivedLink:
+    def __init__(self, title, category, url, created_date ):
+        self.title = title
+        self.url = url
+        self.created_date = created_date
+        self.category = category
+
+class ArchivedContact:
+    def __init__(self, name, email, contact, note, created_date, category):
+        self.name = name
+        self.email = email
+        self.contact = contact
+        self.note = note
+        self.created_date = created_date
+        self.category = category
+
+
+
+
 
 
 class ArchiveManager:
@@ -99,6 +117,8 @@ class ArchiveManager:
     FILES_HTML = "html/files.html"
     CATS_FILES_HTML = "html/files_{}.html"
     CATS_NOTES_HTML = "html/notes_{}.html"
+    CATS_LINKS_HTML = "html/links_{}.html"
+    CATS_CONTACTS_HTML = "html/contacts_{}.html"
     NOTES_HTML = "html/notes.html"
     NOTE_HTML = "html/notes/note_{}.html"
     BOOKMARKS_HTML = "html/bookmarks.html"
@@ -152,8 +172,13 @@ class ArchiveManager:
         archdir='archive_{}'.format(cat)
         arch_files = []
         arch_notes = []
+        arch_links= []
+        arch_contacts= []
         arch_cats_notes = {}
         arch_cats_files = {}
+        arch_cats_links= {}
+        arch_cats_contacts= {}
+
         static_files = [(x, os.path.join(archdir,x.replace('./offline_statics/',''))) for x in glob.iglob("./offline_statics/**/*.*",recursive=True) if os.path.isfile(x) ]
         print(static_files)
 
@@ -201,15 +226,42 @@ class ArchiveManager:
                 notes_html_str = render_to_string('offline/notes.html', {'page_title':k , 'notes':v, 'links':subpage_links})
                 z.writestr(os.path.join(archdir,self.CATS_NOTES_HTML.format(k)), notes_html_str)
 
-            notes_html_str = render_to_string('offline/notes.html', {'page_title':k ,'notes':arch_notes,'links':subpage_links })
+            notes_html_str = render_to_string('offline/notes.html', {'page_title':'Your Notes' ,'notes':arch_notes,'links':subpage_links })
             z.writestr(os.path.join(archdir,self.NOTES_HTML), notes_html_str)
 
+
             #bookmarks
-            bookmarks_html_str = render_to_string('offline/bookmarks.html', {'bookmarks':bookmarks,'links':subpage_links })
+            for bookmark in bookmarks:
+                arch_link= ArchivedLink(bookmark.title,bookmark.category,bookmark.url,bookmark.created_date )
+                if bookmark.category in arch_cats_links:
+                    arch_cats_links[bookmark.category].append(arch_link)
+                else:
+                    arch_cats_links[bookmark.category] = [arch_link]
+                arch_links.append(arch_link)
+
+            for k, v in arch_cats_links.items():
+                links_html_str = render_to_string('offline/bookmarks.html', {'page_title':k , 'bookmarks':v, 'links':subpage_links})
+                z.writestr(os.path.join(archdir,self.CATS_LINKS_HTML.format(k)), links_html_str)
+
+
+            bookmarks_html_str = render_to_string('offline/bookmarks.html', {'page_title':'Your Bookmarks' ,'bookmarks':bookmarks,'links':subpage_links })
             z.writestr(os.path.join(archdir,self.BOOKMARKS_HTML), bookmarks_html_str)
 
             #contacts
-            contacts_html_str = render_to_string('offline/contacts.html', {'contacts':contacts,'links':subpage_links })
+            for contact in contacts:
+                arch_contact = ArchivedContact(contact.name,contact.email,contact.contact,contact.note,contact.created_date,contact.category)
+                if contact.category in arch_cats_contacts:
+                    arch_cats_contacts[contact.category].append(arch_contact)
+                else:
+                    arch_cats_contacts[contact.category] = [arch_contact]
+                arch_links.append(arch_contact)
+
+            for k, v in arch_cats_contacts.items():
+                contacts_html_str = render_to_string('offline/contacts.html', {'page_title':k , 'contacts':v, 'links':subpage_links})
+                z.writestr(os.path.join(archdir,self.CATS_CONTACTS_HTML.format(k)), contacts_html_str)
+
+
+            contacts_html_str = render_to_string('offline/contacts.html', {'page_title':'Your Contacts', 'contacts':contacts,'links':subpage_links })
             z.writestr(os.path.join(archdir,self.CONTACTS_HTML), contacts_html_str)
 
 

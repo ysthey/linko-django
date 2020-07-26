@@ -2,7 +2,7 @@
 {% block content %}
 <div class="row align-items-center mh-100">
   <div class="col-sm-6 mx-auto mt-5">
-    <div class="text-muted pb-2"><h6>Your Bookmarks</h6></div>
+    <div class="text-muted pb-2"><h6>{{ page_title }}</h6></div>
     {% for bookmark in bookmarks %}
     <a href="{{ bookmark.url }}">
     <div class="card link-card shadow-sm mb-2 bg-white">
@@ -10,6 +10,13 @@
         <img width="24" height="24" src="{{ links.images }}/www.png" />
         <div class="flex-wrap ml-3">
           <h6 class="link-head mb-0">{{ bookmark.title }}</h6>
+        <p class="card-text text-muted link-text mb-0">{{ bookmark.created_date }}
+
+          <a href="links_{{ bookmark.category }}.html">
+            <span class="badge rounded-pill bg-light text-dark">{{ bookmark.category }}</span>
+          </a>
+        </p>
+
           <p class="card-text text-muted link-text">{{ bookmark.url }}</p>
         </div>
       </div>
