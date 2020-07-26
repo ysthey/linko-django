@@ -148,9 +148,9 @@ class ArchiveManager:
         with self.__lock:
             if self.__is_running_map.attempt_run(cat):
                 ok= True
-                self.__executor.submit(self.process, file_records, notes, bookmarks, contacts, cat)
 
-        #if ok is True:
+        if ok is True:
+            self.__executor.submit(self.process, file_records, notes, bookmarks, contacts, cat)
             #self.process(file_records, notes, bookmarks, contacts,cat)
 
     def is_archiving(self, cat='all'):
