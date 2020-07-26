@@ -130,21 +130,22 @@ def download_clone(request,cats='all'):
     return response
 
 def CategoryView(request, cats):
-    category_notes = Note.objects.filter(category=cats.replace('-', ' '))
+    category_notes = Note.objects.filter(category__iexact=cats.replace('-', ' '))
     return render(request, 'categories.html', {'title':cats.title().replace('-', ' '), 'category_notes':category_notes,'cats':cats})
 
 
 def CategoryFilesView(request, cats):
-    category_files = Map.objects.filter(category=cats.replace('-', ' '))
+    print(cats)
+    category_files = Map.objects.filter(category__iexact=cats.replace('-', ' '))
     return render(request, 'categoriesfiles.html', {'title':cats.title().replace('-', ' '), 'category_files':category_files, 'cats':cats})
 
 def CategoryLinksView(request, cats):
-    category_list = Bookmark.objects.filter(category=cats.replace('-', ' '))
+    category_list = Bookmark.objects.filter(category__iexact=cats.replace('-', ' '))
     return render(request, 'categorieslinks.html', {'title':cats.title().replace('-', ' '), 'category_list':category_list, 'cats':cats})
 
 
 def CategoryContactsView(request, cats):
-    category_list = Contact.objects.filter(category=cats.replace('-', ' '))
+    category_list = Contact.objects.filter(category__iexact=cats.replace('-', ' '))
     return render(request, 'categoriescontacts.html', {'title':cats.title().replace('-', ' '), 'category_list':category_list, 'cats':cats})
 
 
