@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="row align-items-center mh-100">
+<div class="row align-items-center ">
         <div class="col-sm-6 mx-auto mt-5">
       {% if user.is_authenticated %}
       <form method="get" action="{% url 'searchcts' %}">
