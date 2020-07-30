@@ -9,6 +9,7 @@ MAX_CATEGORY_LENGTH = 100
 MAX_TITLE_LENGTH = 100
 MAX_CONTACT_LENGTH = 100
 MAX_NAME_LENGTH = 255 
+MAX_FILE_NAME_LENGTH = 512
 MAX_EMAIL_LENGTH = 255 
 MAX_URL_LENGTH = 255 
 
@@ -57,7 +58,7 @@ class Contact(models.Model):
 class Map(models.Model):
     name = models.CharField(max_length=MAX_NAME_LENGTH)
     description= models.TextField(null=True, blank=True)
-    file = models.FileField(upload_to='media')
+    file = models.FileField(upload_to='media', max_length=MAX_FILE_NAME_LENGTH)
     category = models.CharField(max_length=MAX_CATEGORY_LENGTH, default='')
     created_date = models.DateField(auto_now_add=True)
 
